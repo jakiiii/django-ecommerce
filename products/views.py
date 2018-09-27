@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, Http404
 from django.views.generic import ListView, DetailView
 
 from .models import Product
@@ -21,5 +21,14 @@ class ProductDetailView(DetailView):
 
     def get_context_data(self, *args, **kwargs):
         context = super(ProductDetailView, self).get_context_data(*args, **kwargs)
-        context['title'] = '{}'.format(self.get_object().title)
+        # context['title'] = '{}'.format(self.get_object().title)
+        context['title'] = 'Product Details'
         return context
+
+    # def get_object(self, *args, **kwargs):
+    #     pk = self.kwargs.get('pk')
+    #     instance = Product.objects.get_by_id(pk)
+    #     if instance is None:
+    #         raise Http404("Page not found")
+    #     return instance
+
