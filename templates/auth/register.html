@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block title %}Loin || {{ block.super }}{% endblock title %}
+
+{% block content %}
+    <h1><b>Register</b></h1>
+    <div class="col-md-6">
+        <form method="POST">{% csrf_token %}
+            {{ form.as_p }}
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label"></label>
+                <div class="col-sm-10">
+                    <button type="submit" class="btn btn-lg btn-block btn-info">Register</button>
+                </div>
+            </div>
+        </form>
+    </div>
+{% endblock %}

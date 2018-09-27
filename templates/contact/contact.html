@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block title %}Contact || {{ block.super }}{% endblock title %}
+
+{% block content %}
+    <h1><b>CONTACT US</b></h1>
+
+    <form method="POST">{% csrf_token %}
+        {{ form.as_p }}
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label"></label>
+            <div class="col-sm-10">
+                <button type="submit" class="btn btn-lg btn-block btn-info">SEND</button>
+            </div>
+        </div>
+    </form>
+{% endblock %}
+
+<div class="form-group row">
+            <label for="fullName" class="col-sm-2 col-form-label">Full Name</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="fullName" name="full_name" placeholder="your full name">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="email" class="col-sm-2 col-form-label">Last Name</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="email" name="email" placeholder="your email">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="contactMessage" class="col-sm-2 col-form-label">Contact</label>
+            <div class="col-sm-10">
+                <textarea class="form-control" rows="6" id="contactMessage" name="message" placeholder="your message"></textarea>
+            </div>
+        </div>

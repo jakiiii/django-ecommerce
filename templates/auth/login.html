@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block title %}REGISTER || {{ block.super }}{% endblock title %}
+
+{% block content %}
+        <h1><b>Login</b></h1>
+        {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}><b>{{ message }}</b></li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+    <form method="POST">{% csrf_token %}
+        {{ form.as_p }}
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label"></label>
+            <div class="col-sm-10">
+                <button type="submit" class="btn btn-lg btn-block btn-info">Login</button>
+            </div>
+        </div>
+    </form>
+{% endblock %}
