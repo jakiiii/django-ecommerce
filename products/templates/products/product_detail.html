@@ -3,8 +3,15 @@
 
 {% block content %}
     <h1>PRODUCTS DETAILS</h1><br/>
-
-    <h4><b>{{ object.title }}</b></h4>
-    <p>{{ object.price }}</p>
-    <p>{{ object.description }}</p>
+    <div class="row">
+        <div class="col-6">
+            <h4><b>{{ object.title }}</b></h4>
+            <p>{{ object.price }}</p>
+            <p>{{ object.description }}</p>
+        </div>
+        <div class="col-6">
+            <img src="{{ object.image.url }}" alt="{{ object.title }}" class="img img-fluid img-thumbnail"
+                 width="540px" height="325px" />
+        </div>
+    </div>
 {% endblock %}
