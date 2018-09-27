@@ -23,7 +23,10 @@ def upload_image_path(inistance, file_name):
 # Create your model manager here.
 class ProductManager(models.Model):
     def get_by_id(self, id):
-        return self.get_queryset().filter(id=id)
+        qs = self.get_queryset().filter(id=id)
+        if qs.count() == 1:
+            return qs.first()
+        return qs
 
 
 # Create your models here.
