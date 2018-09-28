@@ -59,6 +59,7 @@ class Product(models.Model):
     featured = models.BooleanField(default=False)
     active = models.BooleanField(default=True)
     slug = models.SlugField(blank=True, unique=True)
+    timestamp = models.DateTimeField(auto_now_add=True)
 
     objects = ProductManager()
 

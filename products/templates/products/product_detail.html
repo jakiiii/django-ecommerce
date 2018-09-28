@@ -5,9 +5,10 @@
     <h1>PRODUCTS DETAILS</h1><br/>
     <div class="row">
         <div class="col-6">
-            <h4><b>{{ object.title }}</b></h4>
+            <h4><b>{{ object.title | title }}</b></h4>
+            <p>{{ object.timestamp }}</p>
             <p>{{ object.price }}</p>
-            <p>{{ object.description }}</p>
+            <p>{{ object.description | linebreaks }}</p>
         </div>
         <div class="col-6">
             <img src="{{ object.image.url }}" alt="{{ object.title }}" class="img img-fluid img-thumbnail"
