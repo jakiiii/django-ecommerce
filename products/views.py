@@ -1,6 +1,8 @@
 from django.shortcuts import render, Http404
 from django.views.generic import ListView, DetailView
 
+# from analytics.mixins import ObjectViewedMixin
+
 from .models import Product
 
 
@@ -49,3 +51,13 @@ class ProductDetailView(DetailView):
         if instance is None:
             raise Http404("Page not found")
         return instance
+
+
+class ProductDetailSlugView(DetailView):
+    queryset = Product.objects.all()
+    template_name = 'products/product_detail.html'
+
+    def get_context_data(self, *args, **kwargs):
+        context = super(ProductDetailSlugView, self).get_context_data(*args, **kwargs)
+        context['title'] = '{}'.format(self.get_object().title)
+        return context

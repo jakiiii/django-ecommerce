@@ -1,10 +1,12 @@
 from django.db import models
 from django.core.files.storage import FileSystemStorage
+from django.db.models.signals import pre_save
 
 import os
 import random
 
 fs = FileSystemStorage(location='media')
+from .utls import unique_slug_generator
 
 
 def get_filename_exist(file_path):
@@ -25,11 +27,17 @@ class ProductQuerySet(models.query.QuerySet):
     def featured(self):
         return self.filter(featured=True)
 
+    def active(self):
+        return self.filter(active=True)
+
 
 # Create your model manager here.
 class ProductManager(models.Manager):
     def get_queryset(self):
         return ProductQuerySet(self.model, using=self._db)
+
+    def all(self):
+        return self.get_queryset().active()
 
     def featured(self):
         return self.get_queryset().featured()
@@ -48,8 +56,18 @@ class Product(models.Model):
     description = models.TextField(null=True, blank=True)
     image = models.ImageField(upload_to=upload_image_path, null=True, blank=True)
     featured = models.BooleanField(default=False)
+    active = models.BooleanField(default=True)
+    slug = models.SlugField(blank=True, unique=True)
 
     objects = ProductManager()
 
     def __str__(self):
         return self.title
+
+
+def product_pre_save_receiver(sender, instance, *args, **kwargs):
+    if not instance.slug:
+        instance.slug = unique_slug_generator(instance)
+
+
+pre_save.connect(product_pre_save_receiver, sender=Product)
