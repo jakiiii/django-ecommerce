@@ -20,10 +20,19 @@ def upload_image_path(inistance, file_name):
     return "products/{new_filename}/{final_filename}".format(new_filename=new_filename, final_filename=final_filename)
 
 
+# Create your queryset here.
+class ProductQuerySet(models.query.QuerySet):
+    def featured(self):
+        return self.filter(featured=True)
+
+
 # Create your model manager here.
 class ProductManager(models.Manager):
+    def get_queryset(self):
+        return ProductQuerySet(self.model, using=self._db)
+
     def featured(self):
-        return self.get_queryset().filter(featured=True)
+        return self.get_queryset().featured()
 
     def get_by_id(self, id):
         qs = self.get_queryset().filter(id=id)

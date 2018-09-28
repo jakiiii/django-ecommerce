@@ -8,17 +8,26 @@ from .models import Product
 class ProductListFeaturedView(ListView):
     template_name = 'products/list.html'
 
-    def get_queryset(self):
-        return Product.objects.featured()
+    def get_queryset(self, *args, **kwargs):
+        return Product.objects.all().featured()
 
 
 class ProductDetailFeaturedView(DetailView):
+    queryset = Product.objects.all().featured()
     template_name = 'products/product-detail-featured.html'
+
+    # def get_queryset(self, *args, **kwargs):
+    #     return Product.objects.featured()
+
+    def get_context_data(self, *args, **kwargs):
+        context = super(ProductDetailFeaturedView, self).get_context_data(*args, **kwargs)
+        context['title'] = '{}'.format(self.get_object().title)
+        return context
 
 
 class ProductListView(ListView):
+    model = Product
     template_name = 'products/list.html'
-    queryset = Product.objects.all()
     context_object_name = 'product_list'
 
     def get_context_data(self, *args, **kwargs):
