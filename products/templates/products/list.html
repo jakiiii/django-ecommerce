@@ -5,7 +5,7 @@
     <h1>PRODUCTS</h1><br/>
     {% for product in product_list %}
         <h4>
-            <a href="" class="btn btn-info">{{ product.title }}</a>
+            <a href="{{ product.get_absolute_url }}" class="btn btn-info">{{ product.title }}</a>
         </h4>
     {% endfor %}
 {% endblock %}
