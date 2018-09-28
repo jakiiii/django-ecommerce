@@ -1,12 +1,13 @@
 from django.db import models
 from django.core.files.storage import FileSystemStorage
 from django.db.models.signals import pre_save
+from django.urls import reverse
 
 import os
 import random
 
-fs = FileSystemStorage(location='media')
 from .utls import unique_slug_generator
+fs = FileSystemStorage(location='media')
 
 
 def get_filename_exist(file_path):
@@ -65,7 +66,8 @@ class Product(models.Model):
         return self.title
 
     def get_absolute_url(self):
-        return "/products/{slug}".format(slug=self.slug)
+        # return "/products/{slug}".format(slug=self.slug)
+        return reverse("product-detail", kwargs={"slug": self.slug})
 
 
 def product_pre_save_receiver(sender, instance, *args, **kwargs):
