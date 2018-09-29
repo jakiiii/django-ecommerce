@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models import Q
 from django.core.files.storage import FileSystemStorage
 from django.db.models.signals import pre_save
 from django.urls import reverse
@@ -31,6 +32,15 @@ class ProductQuerySet(models.query.QuerySet):
     def active(self):
         return self.filter(active=True)
 
+    def search(self, query):
+        lookups = (
+                Q(title__icontains=query) |
+                Q(description__icontains=query) |
+                Q(price__icontains=query)
+        )
+        # Q(tag_name__icontains = query)
+        return self.active().filter(lookups).distinct()
+
 
 # Create your model manager here.
 class ProductManager(models.Manager):
@@ -48,6 +58,9 @@ class ProductManager(models.Manager):
         if qs.count() == 1:
             return qs.first()
         return qs
+
+    def search(self, query):
+        return self.get_queryset().search(query)
 
 
 # Create your models here.
