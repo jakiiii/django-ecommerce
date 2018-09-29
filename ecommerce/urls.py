@@ -26,6 +26,7 @@ urlpatterns = [
     path('', HomeTemplateView.as_view(), name='home'),
     path('contact/', include('contact.urls')),
     path('products/', include('products.urls')),
+    path('', include('search.urls')),
 ]
 
 if settings.DEBUG:
