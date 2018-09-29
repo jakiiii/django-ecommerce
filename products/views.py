@@ -28,9 +28,12 @@ class ProductDetailFeaturedView(DetailView):
 
 
 class ProductListView(ListView):
-    model = Product
+    # model = Product
     template_name = 'products/list.html'
     context_object_name = 'product_list'
+
+    def get_queryset(self, *args, **kwargs):
+        return Product.objects.all().featured()
 
     def get_context_data(self, *args, **kwargs):
         context = super(ProductListView, self).get_context_data(*args, **kwargs)
