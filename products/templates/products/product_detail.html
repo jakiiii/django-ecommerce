@@ -9,6 +9,9 @@
             <p>{{ object.timestamp }}</p>
             <p>{{ object.price }}</p>
             <p>{{ object.description | linebreaks }}</p>
+            {% for tag in object.tags %}
+            <a href="#" class="btn btn-sm btn-info my-2">{{ tag }}</a>
+            {% endfor %}
         </div>
         <div class="col-6">
             <img src="{{ object.image.url }}" alt="{{ object.title }}" class="img img-fluid img-thumbnail"
