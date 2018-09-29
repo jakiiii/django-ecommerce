@@ -27,6 +27,7 @@ urlpatterns = [
     path('contact/', include('contact.urls')),
     path('products/', include('products.urls')),
     path('', include('search.urls')),
+    path('', include('tags.urls')),
 ]
 
 if settings.DEBUG:
