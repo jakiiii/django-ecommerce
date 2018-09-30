@@ -3,47 +3,49 @@
 {% url 'contact' as contact_url %}
 {% url 'login' as login_url %}
 {% url 'register' as register_url %}
+{% url 'cart' as cart_url %}
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <a class="navbar-brand" href="{% url 'home' %}">{% if brand_name %}{{ brand_name }}{% else %}jQurity e-Commerce{% endif %}</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
 
-  <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item {% if request.path == home_url %}active{% endif %}">
-        <a class="nav-link" href="{{ home_url }}">Home</a>
-      </li>
-      <li class="nav-item {% if request.path == product_url %}active{% endif %}">
-        <a class="nav-link" href="{{ product_url }}">Products</a>
-      </li>
-      <li class="nav-item {% if request.path == contact_url %}active{% endif %}">
-        <a class="nav-link" href="{{ contact_url }}">Contact</a>
-      </li>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item {% if request.path == home_url %}active{% endif %}">
+                <a class="nav-link" href="{{ home_url }}">Home</a>
+            </li>
+            <li class="nav-item {% if request.path == product_url %}active{% endif %}">
+                <a class="nav-link" href="{{ product_url }}">Products</a>
+            </li>
+            <li class="nav-item {% if request.path == contact_url %}active{% endif %}">
+                <a class="nav-link" href="{{ contact_url }}">Contact</a>
+            </li>
+            <li class="nav-item {% if request.path == cart_url %}active{% endif %}">
+                <a class="nav-link" href="{{ cart_url }}">{{ request.session.cart_items }} <i class="fas fa-shopping-cart"></i>
+                </a>
+            </li>
 
-        {% if request.user.is_authenticated %}
-            <li class="nav-item">
-        <a class="nav-link" href="">Log Out</a>
-      </li>
-        {% else %}
-      <li class="nav-item dropdown {% if request.path == login_url or request.path == register_url %}active{% endif %}">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Accounts
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            {% if request.user.is_authenticated %}
+                <li class="nav-item">
+                    <a class="nav-link" href="">Log Out</a>
+                </li>
+            {% else %}
+                <li class="nav-item dropdown {% if request.path == login_url or request.path == register_url %}active{% endif %}">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Accounts
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
 
+                        <a class="dropdown-item" href="{{ login_url }}">Login</a>
+                        <a class="dropdown-item" href="{{ register_url }}">Register</a>
+                    </div>
+                </li>
+            {% endif %}
+        </ul>
 
-          <a class="dropdown-item" href="{{ login_url }}">Login</a>
-          <a class="dropdown-item" href="{{ register_url }}">Register</a>
-
-        </div>
-      </li>
-    {% endif %}
-
-    </ul>
-    <!-- search from -->
-  {% include 'search/sinppets/search.html' %}
-
-  </div>
+        <!-- search from -->
+        {% include 'search/sinppets/search.html' %}
+    </div>
 </nav>

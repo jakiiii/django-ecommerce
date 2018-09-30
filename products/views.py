@@ -4,6 +4,7 @@ from django.views.generic import ListView, DetailView
 # from analytics.mixins import ObjectViewedMixin
 
 from .models import Product
+from carts.models import Cart
 
 
 # Create your views here.
@@ -63,4 +64,19 @@ class ProductDetailSlugView(DetailView):
     def get_context_data(self, *args, **kwargs):
         context = super(ProductDetailSlugView, self).get_context_data(*args, **kwargs)
         context['title'] = '{}'.format(self.get_object().title)
+        cart_obj, new_obj = Cart.objects.new_cart_or_get(self.request)
+        context['cart'] = cart_obj
         return context
+
+    def get_object(self, *args, **kwargs):
+        slug = self.kwargs.get('slug')
+        try:
+            instance = Product.objects.get(slug=slug, active=True)
+        except Product.DoesNotExist:
+            raise Http404("Product does not found!")
+        except Product.MultipleObjectsReturned:
+            qs = Product.objects.filter(slug=slug, active=True)
+            instance = qs.first()
+        except:
+            raise Http404('Something is illegal!')
+        return instance

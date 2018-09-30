@@ -2,5 +2,41 @@
 {% block title %}Products || {{ block.super }}{% endblock title %}
 
 {% block content %}
-    <h1>HELLO CART</h1>
+    <div class="py-4">
+    <h1>Your Cart</h1><hr/>
+        {% if cart.products.exists %}
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Product Name</th>
+                <th scope="col">Product Price</th>
+                <th scope="col" class="text-center">Product Remove</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for product in cart.products.all %}
+            <tr>
+                <th scope="row">{{ forloop.counter }}</th>
+                <td><a href="{{ product.get_absolute_url }}" class="btn btn-link">{{ product.title }}</a></td>
+                <td>{{ product.price }}</td>
+                <td class="text-center" width="200px;">
+                    {% include 'products/snippets/update-cart.html' with product=product cart=cart in_cart=True %}
+                </td>
+            </tr>
+            {% endfor %}
+            <tr>
+                <th scope="row">Subtotal</th>
+                <td colspan="3" class="text-right"><b>{{ cart.subtotal }} Tk</b></td>
+            </tr>
+            <tr>
+                <th scope="row">Total</th>
+                <td colspan="3" class="text-right"><b>{{ cart.total }} Tk</b></td>
+            </tr>
+            </tbody>
+        </table>
+        {% else %}
+            <p class="text-info">Cart is empty.</p>
+        {% endif %}
+    </div>
 {% endblock %}
