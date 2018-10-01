@@ -49,6 +49,7 @@ LOCAL_APPS = [
     'tags',
     'search',
     'carts',
+    'orders',
     'contact',
 ]
 

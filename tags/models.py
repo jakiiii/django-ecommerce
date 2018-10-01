@@ -1,8 +1,7 @@
 from django.db import models
 from django.db.models.signals import pre_save
-from django.urls import reverse
 
-from products.utls import unique_slug_generator
+from ecommerce.utls import unique_slug_generator
 
 
 # Create your models here.

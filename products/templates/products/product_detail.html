@@ -2,8 +2,7 @@
 {% block title %}{{ title }} || {{ block.super }}{% endblock title %}
 
 {% block content %}
-    <h1>PRODUCTS DETAILS</h1><br/>
-    <div class="row">
+    <div class="row py-4">
         <div class="col-6">
             <h4><b>{{ object.title | title }}</b></h4>
             <p>{{ object.timestamp }}</p>

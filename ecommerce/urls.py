@@ -24,11 +24,12 @@ from .views import HomeTemplateView
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', HomeTemplateView.as_view(), name='home'),
-    path('contact/', include('contact.urls')),
     path('products/', include('products.urls')),
     path('', include('search.urls')),
     path('', include('tags.urls')),
     path('cart/', include('carts.urls')),
+    path('order/', include('orders.urls')),
+    path('contact/', include('contact.urls')),
 ]
 
 if settings.DEBUG:
