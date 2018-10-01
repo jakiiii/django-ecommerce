@@ -45,6 +45,7 @@ THIRD_PARTY_APPS = [
 ]
 
 LOCAL_APPS = [
+    'accounts',
     'products',
     'tags',
     'search',
