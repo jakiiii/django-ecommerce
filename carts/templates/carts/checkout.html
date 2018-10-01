@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block title %}Products || {{ block.super }}{% endblock title %}
+
+{% block content %}
+    <h1>CHECKOUT</h1>
+
+    <div class="row">
+        <div class="col-6">
+            <table class="table table-bordered">
+                <tbody>
+                    <tr>
+                        <th width="250px"><b>Cart Total: </b></th>
+                        <td>{{ object.cart.total }}</td>
+                    </tr>
+                    <tr>
+                        <th width="250px"><b>Cart Shipping Total: </b></th>
+                        <td>{{ object.shipping_total }}</td>
+                    </tr>
+                    <tr>
+                        <th width="250px"><b>Order Total: </b></th>
+                        <td>{{ object.total }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-6"></div>
+    </div>
+{% endblock %}

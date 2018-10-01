@@ -1,3 +1,5 @@
+from decimal import Decimal
+
 from django.db import models
 from django.contrib.auth import settings
 from django.db.models.signals import pre_save, m2m_changed
@@ -61,7 +63,7 @@ def cart_m2m_changed_receiver(sender, instance, action, *args, **kwargs):
 
 def cart_pre_save_receiver(sender, instance, *args, **kwargs):
     if instance.subtotal > 0:
-        instance.total = instance.subtotal + 10  # tax, shipping charge, coupon etc
+        instance.total = Decimal(instance.subtotal) * Decimal(1.08)  # tax, shipping charge, coupon etc
     else:
         instance.total = 0.00
 

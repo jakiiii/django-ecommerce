@@ -33,6 +33,11 @@
                 <th scope="row">Total</th>
                 <td colspan="3" class="text-right"><b>{{ cart.total }} Tk</b></td>
             </tr>
+            <tr>
+                <td colspan="4" class="text-right">
+                    <a href="{% url 'checkout' %}" class="btn btn-lg btn-primary" >Checkout</a>
+                </td>
+            </tr>
             </tbody>
         </table>
         {% else %}
