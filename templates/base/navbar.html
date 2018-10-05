@@ -4,6 +4,7 @@
 {% url 'login' as login_url %}
 {% url 'register' as register_url %}
 {% url 'cart' as cart_url %}
+{% url 'logout' as logout_url %}
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <a class="navbar-brand" href="{% url 'home' %}">{% if brand_name %}{{ brand_name }}{% else %}jQurity e-Commerce{% endif %}</a>
@@ -28,9 +29,20 @@
             </li>
 
             {% if request.user.is_authenticated %}
-                <li class="nav-item">
-                    <a class="nav-link" href="">Log Out</a>
+                <li class="nav-item {% if request.path == cart_url %}active{% endif %}">
+                    <a class="nav-link" href="{{ logout_url }}">Logout <span>{{ user }}</span></i>
+                    </a>
                 </li>
+                <!-- <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Accounts
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+
+                        <a class="dropdown-item" href="#">Settings</a>
+                        <a class="dropdown-item" href="#">Logout</a>
+                    </div>
+                </li> -->
             {% else %}
                 <li class="nav-item dropdown {% if request.path == login_url or request.path == register_url %}active{% endif %}">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
