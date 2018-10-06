@@ -36,3 +36,7 @@ class RegisterForm(forms.Form):
         if password2 != password:
             raise forms.ValidationError('Password have to match!')
         return data
+
+
+class GuestForm(forms.Form):
+    email = forms.EmailField(max_length=32, widget=forms.EmailInput(attrs={"class": "form-control"}))
