@@ -2,6 +2,8 @@
 {% block title %}Products || {{ block.super }}{% endblock title %}
 
 {% block content %}
+    <h4>Order ID- {{ object.order_id }}</h4>
+    <h4>Cart ID- {{ object.cart }}</h4>
     <h1>CHECKOUT</h1><hr/>
     {% if not billing_profile %}
         <div class="row py-4">
