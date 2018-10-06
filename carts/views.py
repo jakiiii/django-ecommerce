@@ -51,8 +51,10 @@ def checkout_home(request):
     guest_form = GuestForm()
     guest_email_id = request.session.get('guest_email_id')
     if user.is_authenticated:
+        'login in user checkout; remember payment staff.'
         billing_profile, billing_profile_created = BillingProfile.objects.get_or_create(user=user, email=user.email)
     elif guest_email_id is not None:
+        'guest user checkout; auto reload payment staff.'
         guest_email_obj = GuestEmail.objects.get(id=guest_email_id)
         billing_profile, billing_guest_profile_created = \
             BillingProfile.objects.get_or_create(email=guest_email_obj.email)
@@ -61,11 +63,7 @@ def checkout_home(request):
 
     # Lot more completed this order
     if billing_profile is not None:
-        order_qs = Order.objects.filter(billing_profile=billing_profile, cart=cart_obj, active=True)
-        if order_qs.count() == 1:
-            order_obj = order_qs.first()
-        else:
-            order_obj = Order.objects.create(billing_profile=billing_profile, cart=cart_obj)
+        order_obj, order_obj_created = Order.objects.new_or_get(billing_profile, cart_obj)
 
     context = {
         'object': order_obj,
