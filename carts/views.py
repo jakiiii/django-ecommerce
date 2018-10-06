@@ -11,7 +11,7 @@ from accounts.forms import LoginForm, GuestForm
 
 # Create your views here.
 def cart_home(request):
-    cart_obj, new_obj = Cart.objects.new_cart_or_get(request)
+    cart_obj, new_obj = Cart.objects.new_or_get(request)
     template_name = 'carts/cart_home.html'
     context = {
         "cart": cart_obj
@@ -27,7 +27,7 @@ def cart_update(request):
         except Product.DoesNotExist:
             print('product is gone!? May be technical bug! We will fixed sooner.')
             return redirect('cart')
-        cart_obj, new_obj = Cart.objects.new_cart_or_get(request)
+        cart_obj, new_obj = Cart.objects.new_or_get(request)
         if product_obj in cart_obj.products.all():
             cart_obj.products.remove(product_obj)
             request.session['cart_items'] = cart_obj.products.count()
@@ -40,7 +40,7 @@ def cart_update(request):
 
 def checkout_home(request):
     template_name = 'carts/checkout.html'
-    cart_obj, cart_created = Cart.objects.new_cart_or_get(request)
+    cart_obj, cart_created = Cart.objects.new_or_get(request)
     order_obj = None
     if cart_created or cart_obj.products.count() == 0:
         return redirect('cart')
