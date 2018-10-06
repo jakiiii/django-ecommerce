@@ -43,9 +43,9 @@ class Order(models.Model):
 def pre_save_receiver_order_id(sender, instance, *args, **kwargs):
     if not instance.order_id:
         instance.order_id = unique_order_id_generator(instance)
-
-
-pre_save.connect(pre_save_receiver_order_id, sender=Order)
+    qs = Order.objects.filter(cart=instance.cart).exclude(billing_profile=instance.billing_profile)
+    if qs.exists():
+        qs.update(active=False)
 
 
 def post_save_cart_total(sender, instance, created, *args, **kwargs):
@@ -59,12 +59,11 @@ def post_save_cart_total(sender, instance, created, *args, **kwargs):
             order_obj.update_total()
 
 
-post_save.connect(post_save_cart_total, sender=Cart)
-
-
 def post_save_order(sender, instance, created, *args, **kwargs):
     if created:
         instance.update_total()
 
 
+pre_save.connect(pre_save_receiver_order_id, sender=Order)
+post_save.connect(post_save_cart_total, sender=Cart)
 post_save.connect(post_save_order, sender=Order)

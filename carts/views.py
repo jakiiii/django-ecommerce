@@ -65,9 +65,6 @@ def checkout_home(request):
         if order_qs.count() == 1:
             order_obj = order_qs.first()
         else:
-            old_order_qs = Order.objects.exclude(billing_profile=billing_profile).filter(cart=cart_obj, active=True)
-            if old_order_qs.exists():
-                old_order_qs.update(active=False)
             order_obj = Order.objects.create(billing_profile=billing_profile, cart=cart_obj)
 
     context = {
