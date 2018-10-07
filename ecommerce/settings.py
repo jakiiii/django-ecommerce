@@ -52,6 +52,7 @@ LOCAL_APPS = [
     'carts',
     'orders',
     'billing',
+    'address',
     'contact',
 ]
 
