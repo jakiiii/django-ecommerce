@@ -45,7 +45,7 @@
         {% else %}
 
 
-        <h1>CHECKOUT</h1><hr/>
+        <h1><b>CHECKOUT</b></h1><hr/>
         <div class="row">
             <div class="col-6">
                 <table class="table table-bordered">
@@ -64,6 +64,9 @@
                     </tr>
                     </tbody>
                 </table>
+                <form class="form" method="post" action="">{% csrf_token %}
+                    <button type="submit" class="btn btn-success">Checkout</button>
+                </form>
             </div>
             <div class="col-6"></div>
         </div>
