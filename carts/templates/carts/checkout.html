@@ -23,24 +23,59 @@
 
 
         {% if not object.shipping_address %}
-        <div style="margin-left: 14rem;">
-            <div class="card" style="width: 40rem; margin-top: 2rem;">
-                <div class="card-header text-left"><b>Shipping information</b></div>
-                <div class="card-body">
-                    {% url 'checkout-address' as checkout_address_url %}
-                    {% include 'address/form.html' with form=address_form next_url=request.build_absolute_uri action_url=checkout_address_url address_type='shipping' %}
-                </div><!-- end of card body -->
-            </div><!-- end of card -->
+        <div class="py-4">
+            <h2><b>Shipping Address</b></h2><hr/>
         </div>
+        <div class="row">
+            <div class="col-6">
+                <div class="card">
+                    <div class="card-header text-left"><b>Shipping information</b></div>
+                    <div class="card-body">
+                        {% url 'checkout-address' as checkout_address_url %}
+                        {% include 'address/form.html' with form=address_form next_url=request.build_absolute_uri action_url=checkout_address_url address_type='shipping' %}
+                    </div><!-- end of card body -->
+                </div><!-- end of card -->
+            </div>
+            {% if address_qs.exists %}
+            <div class="col-6">
+                <div class="card">
+                    <div class="card-header"><b>Choose your shipping address</b></div>
+                    <div class="card-body">
+                        {% url 'checkout-reuse' as checkout_reuse_url %}
+                        {% include 'address/old_address.html' with address_qs=address_qs next_url=request.build_absolute_uri action_url=checkout_reuse_url address_type='shipping' %}
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+
         {% elif not object.billing_address %}
-        <div style="margin-left: 14rem;">
-            <div class="card" style="width: 40rem; margin-top: 2rem;">
-                <div class="card-header text-left"><b>Billing information</b></div>
-                <div class="card-body">
-                    {% url 'checkout-address' as checkout_address_url %}
-                    {% include 'address/form.html' with form=address_form next_url=request.build_absolute_uri action_url=checkout_address_url address_type='billing' %}
-                </div><!-- end of card body -->
-            </div><!-- end of card -->
+
+
+        <div class="py-4">
+            <h2><b>Billing Address</b></h2><hr/>
+        </div>
+        <div class="row">
+            <div class="col-6">
+                <div class="card">
+                    <div class="card-header text-left"><b>Billing information</b></div>
+                    <div class="card-body">
+                        {% url 'checkout-address' as checkout_address_url %}
+                        {% include 'address/form.html' with form=address_form next_url=request.build_absolute_uri action_url=checkout_address_url address_type='billing' %}
+                    </div><!-- end of card body -->
+                </div><!-- end of card -->
+            </div>
+            {% if address_qs.exists %}
+            <div class="col-6">
+                <div class="card">
+                    <div class="card-header"><b>Choose your billing address</b></div>
+                    <div class="card-body">
+                        {% url 'checkout-reuse' as checkout_reuse_url %}
+                        {% include 'address/old_address.html' with address_qs=address_qs next_url=request.build_absolute_uri action_url=checkout_reuse_url address_type='billing' %}
+                    </div>
+                </div>
+            </div>
+            {% endif %}
         </div>
         {% else %}
 

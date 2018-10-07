@@ -1,0 +1,18 @@
+<form class="form" action="{{ action_url }}" method="post">{% csrf_token %}
+
+    {% if next_url %}
+        <input type="hidden" name="next" value="{{ next_url }}" />
+    {% endif %}
+    {% if address_type %}
+        <input type="hidden" name="address_type" value="{{ address_type }}" />
+    {% endif %}
+
+    {% for address in address_qs %}
+        <label for="address-{{ address.id }}">
+            <input type="radio" id="address-{{ address.id }}" name="shipping_address" value="{{ address.id }}" />
+        </label>
+        {{ address.address_1 }}<br/>
+    {% endfor %}
+
+    <button type="submit" class="btn btn-secondary">Use Old Address</button>
+</form>
