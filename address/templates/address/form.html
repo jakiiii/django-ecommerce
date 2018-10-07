@@ -1,0 +1,45 @@
+{% load widget_tweaks %}
+
+
+                <form method="post" action="{% if action_url %}{{ action_url }}{% else %}{% url 'login' %}{% endif %}">{% csrf_token %}
+                {% if next_url %}
+                    <input type="hidden" name="next" value="{{ next_url }}" />
+                {% endif %}
+                {% if address_type %}
+                    <input type="hidden" name="address_type" value="{{ address_type }}" />
+                {% endif %}
+
+                    {% for hidden in form.hidden_fields %}
+                    {{ hidden }}
+                    {% endfor %}
+
+                    {% for field in form.visible_fields %}
+                    <div class="form-group row">
+                        <label class="col-md-4 col-form-label text-left"><b>{{ field.label_tag }}</b></label>
+                        {% if form.is_bound %}
+                        {% if field.errors %}
+                        {% render_field field class="form-control is-invalid" %}
+                        {% for error in field.errors %}
+                        <div class="invalid-feedback">
+                            {{ error }}
+                        </div>
+                        {% endfor %}
+                        {% else %}
+                        {% render_field field class="form-control is-valid" %}
+                        {% endif %}
+                        {% else %}
+                        <div class="col-md-8">
+                            {% render_field field class="form-control" %}
+                        </div>
+                        {% endif %}
+                    </div><!-- end of form -->
+                    {% endfor %}
+
+                    <div class="form-group row">
+                        <label class="col-sm-4 col-form-label"></label>
+                        <div class="col-sm-8">
+                            <button type="submit" class="btn btn-secondary btn-lg float-left btn-block">Login</button>
+                        </div>
+                    </div>
+                </form>
+

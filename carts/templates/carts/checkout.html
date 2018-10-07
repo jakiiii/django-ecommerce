@@ -2,9 +2,7 @@
 {% block title %}Products || {{ block.super }}{% endblock title %}
 
 {% block content %}
-    <h4>Order ID- {{ object.order_id }}</h4>
-    <h4>Cart ID- {{ object.cart }}</h4>
-    <h1>CHECKOUT</h1><hr/>
+
     {% if not billing_profile %}
         <div class="row py-4">
             <div class="col-12 col-md-6">
@@ -22,26 +20,55 @@
             </div>
         </div>
     {% else %}
+
+
+        {% if not object.shipping_address %}
+        <div style="margin-left: 14rem;">
+            <div class="card" style="width: 40rem; margin-top: 2rem;">
+                <div class="card-header text-left"><b>Shipping information</b></div>
+                <div class="card-body">
+                    {% url 'checkout-address' as checkout_address_url %}
+                    {% include 'address/form.html' with form=address_form next_url=request.build_absolute_uri action_url=checkout_address_url address_type='shipping' %}
+                </div><!-- end of card body -->
+            </div><!-- end of card -->
+        </div>
+        {% elif not object.billing_address %}
+        <div style="margin-left: 14rem;">
+            <div class="card" style="width: 40rem; margin-top: 2rem;">
+                <div class="card-header text-left"><b>Billing information</b></div>
+                <div class="card-body">
+                    {% url 'checkout-address' as checkout_address_url %}
+                    {% include 'address/form.html' with form=address_form next_url=request.build_absolute_uri action_url=checkout_address_url address_type='billing' %}
+                </div><!-- end of card body -->
+            </div><!-- end of card -->
+        </div>
+        {% else %}
+
+
+        <h1>CHECKOUT</h1><hr/>
         <div class="row">
             <div class="col-6">
                 <table class="table table-bordered">
                     <tbody>
-                        <tr>
-                            <th width="250px"><b>Cart Total: </b></th>
-                            <td>{{ object.cart.total }}</td>
-                        </tr>
-                        <tr>
-                            <th width="250px"><b>Cart Shipping Total: </b></th>
-                            <td>{{ object.shipping_total }}</td>
-                        </tr>
-                        <tr>
-                            <th width="250px"><b>Order Total: </b></th>
-                            <td>{{ object.total }}</td>
-                        </tr>
+                    <tr>
+                        <th width="250px"><b>Cart Total: </b></th>
+                        <td>{{ object.cart.total }}</td>
+                    </tr>
+                    <tr>
+                        <th width="250px"><b>Cart Shipping Total: </b></th>
+                        <td>{{ object.shipping_total }}</td>
+                    </tr>
+                    <tr>
+                        <th width="250px"><b>Order Total: </b></th>
+                        <td>{{ object.total }}</td>
+                    </tr>
                     </tbody>
                 </table>
             </div>
             <div class="col-6"></div>
         </div>
+
+
+        {% endif %}
     {% endif %}
 {% endblock %}

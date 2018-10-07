@@ -28,4 +28,4 @@ class Address(models.Model):
     objects = AddressManager()
 
     def __str__(self):
-        return self.billing_profile
+        return str(self.billing_profile)
