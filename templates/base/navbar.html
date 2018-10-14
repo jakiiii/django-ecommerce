@@ -23,8 +23,9 @@
             <li class="nav-item {% if request.path == contact_url %}active{% endif %}">
                 <a class="nav-link" href="{{ contact_url }}">Contact</a>
             </li>
+
             <li class="nav-item {% if request.path == cart_url %}active{% endif %}">
-                <a class="nav-link" href="{{ cart_url }}">{{ request.session.cart_items }} <i class="fas fa-shopping-cart"></i>
+                <a class="nav-link" href="{{ cart_url }}"><span class="cart-count"> {{ request.session.cart_items }} </span><i class="fas fa-shopping-cart"></i>
                 </a>
             </li>
 
