@@ -13,6 +13,17 @@ from address.forms import AddressForm
 
 
 # Create your views here.
+def cart_details_api_view(request):
+    cart_obj, new_obj = Cart.objects.new_or_get(request)
+    products = [{"name": x.title, "price": x.price} for x in cart_obj.products.all()]
+    cart_data = {
+        "products": products,
+        "subtotal": cart_obj.subtotal,
+        "total": cart_obj.total
+    }
+    return JsonResponse(cart_data)
+
+
 def cart_home(request):
     cart_obj, new_obj = Cart.objects.new_or_get(request)
     template_name = 'carts/cart_home.html'
