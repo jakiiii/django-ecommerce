@@ -15,7 +15,14 @@
                     <p>{{ product.description | linebreaks | truncatewords:10 }}</p>
               </div>
                 <div class="card-footer">
-                    <a href="{{ product.get_absolute_url }}" class="btn btn-block btn-info">View Detail</a>
+                    <div class="row">
+                        <div class="col-5">
+                            <a href="{{ product.get_absolute_url }}" class="btn btn-info">View Detail</a>
+                        </div>
+                        <div class="col-5">
+                            {% include 'products/snippets/update-cart.html' with product=product cart=cart %}
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
