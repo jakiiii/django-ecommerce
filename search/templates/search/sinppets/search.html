@@ -1,8 +1,8 @@
 <div>
-    <form method="GET" action="{% url 'query' %}" class="form input-group">
+    <form method="GET" action="{% url 'query' %}" class="form input-group search-form">
         <input type="text" name="q" class="form-control" placeholder="Search" aria-label="Search" />
         <div class="input-group-append">
-            <button class="btn btn-outline-success" type="submit">Search</button>
+            <button class="btn btn-outline-success" name="submit" type="submit">Search</button>
         </div>
     </form>
 </div>
