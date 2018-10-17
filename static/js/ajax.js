@@ -65,8 +65,11 @@ $(document).ready(function () {
                 }
             },
             error: function (errorData) {
-                console.log("error");
-                console.log(errorData);
+                $.confirm({
+                    theme: 'light',
+                    title: 'Oops!',
+                    content: 'An error occurred!',
+                });
             }
         })
     });
@@ -109,8 +112,11 @@ $(document).ready(function () {
                 }
             },
             error: function (errorData) {
-                console.log("error");
-                console.log(errorData)
+                $.confirm({
+                    theme: 'light',
+                    title: 'Oops!',
+                    content: 'An error occurred!',
+                });
             }
         })
     }
