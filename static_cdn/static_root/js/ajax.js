@@ -1,4 +1,67 @@
 $(document).ready(function () {
+    // Contact Form Handler
+    let contactForm = $(".contact-form");
+    let contactFormMethod = contactForm.attr("method");
+    let contactFormEndpoint = contactForm.attr("action");
+
+
+    function displaySubmitting(submitBtn, defaultText, doSubmit) {
+        if (doSubmit) {
+            submitBtn.addClass("disabled");
+            submitBtn.html("<i class='fa fa-spin fa-spinner'></i> Submitting");
+        } else {
+            submitBtn.removeClass("disabled");
+            submitBtn.html(defaultText)
+        }
+    }
+
+    contactForm.submit(function (event) {
+        event.preventDefault()
+        let contactFormData = contactForm.serialize();
+        let thisForm = $(this);
+        let contactFormSubmitBtn = contactForm.find("[name='submit']");
+        let contactFormSubmitBtnTxt = contactFormSubmitBtn.text();
+
+        displaySubmitting(contactFormSubmitBtn, "", true);
+        $.ajax({
+            method: contactFormMethod,
+            url: contactFormEndpoint,
+            data: contactFormData,
+            success: function (data) {
+                contactForm[0].reset();
+                $.confirm({
+                    theme: 'dark',
+                    title: 'Success',
+                    content: data.message,
+                });
+                setTimeout(function () {
+                    displaySubmitting(contactFormSubmitBtn, contactFormSubmitBtnTxt, false);
+                }, 500)
+            },
+            error: function (error) {
+                console.log("error");
+                console.log(error.responseJSON);
+                let jsonData = error.responseJSON;
+                let msg = "";
+
+                $.each(jsonData, function (key, value) {
+                    msg += key + ": " + value[0].message + "<br/>"
+                });
+
+                $.confirm({
+                    theme: 'material',  // supervan
+                    title: 'Oops!',
+                    content: msg,
+                });
+
+                setTimeout(function () {
+                    displaySubmitting(contactFormSubmitBtn, contactFormSubmitBtnTxt, false);
+                }, 500)
+            }
+        })
+    });
+
+
     // Ajax Search
     let searchForm = $(".search-form");
     let searchInput = searchForm.find("[name='q']");
@@ -65,9 +128,11 @@ $(document).ready(function () {
                 }
             },
             error: function (errorData) {
-                alert("An error occurred!");
-                console.log("error");
-                console.log(errorData);
+                $.confirm({
+                    theme: 'light',
+                    title: 'Oops!',
+                    content: 'An error occurred!',
+                });
             }
         })
     });
@@ -110,8 +175,11 @@ $(document).ready(function () {
                 }
             },
             error: function (errorData) {
-                console.log("error");
-                console.log(errorData)
+                $.confirm({
+                    theme: 'light',
+                    title: 'Oops!',
+                    content: 'An error occurred!',
+                });
             }
         })
     }
