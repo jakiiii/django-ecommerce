@@ -4,17 +4,25 @@
 {% block content %}
     <h1><b>CONTACT US</b></h1>
 
-    <form method="POST">{% csrf_token %}
-        {{ form.as_p }}
-        <div class="form-group row">
-            <label class="col-sm-2 col-form-label"></label>
-            <div class="col-sm-10">
-                <button type="submit" class="btn btn-lg btn-block btn-info">SEND</button>
+    <div class="row">
+        <div class="col-6">
+            <div class="col-10 col-md-10 mx-auto">
+                <form class="contact-form" method="POST" action="{% url 'contact' %}">{% csrf_token %}
+                    {{ form.as_p }}
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label"></label>
+                        <div class="col-sm-10">
+                            <button type="submit" name="submit" class="btn btn-block btn-secondary">Submit</button>
+                        </div>
+                    </div>
+                </form>
             </div>
         </div>
-    </form>
+        <div class="col-6"></div>
+    </div>
 {% endblock %}
 
+<!--
 <div class="form-group row">
             <label for="fullName" class="col-sm-2 col-form-label">Full Name</label>
             <div class="col-sm-10">
@@ -33,3 +41,4 @@
                 <textarea class="form-control" rows="6" id="contactMessage" name="message" placeholder="your message"></textarea>
             </div>
         </div>
+-->

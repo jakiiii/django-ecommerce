@@ -12,10 +12,11 @@ class ContactForm(forms.Form):
                                                            "id": "contact_message",
                                                            "placeholder": "your message"}))
 
-    def clean_email(self):
-        email = self.cleaned_data.get("email")
-        if not "gmail.com" in email:
-            raise forms.ValidationError("Email have to be Gamil")
-        return email
+    # def clean_email(self):
+    #     email = self.cleaned_data.get("email")
+    #     if not "gmail.com" in email:
+    #         raise forms.ValidationError("Email has to be Gamil.")
+    #     return email
 
-
+    # def clean_contact(self):
+    #     raise forms.ValidationError("Your contact address is not correct!")
