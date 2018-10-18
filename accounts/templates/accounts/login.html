@@ -1,27 +1,55 @@
 {% extends 'base.html' %}
 {% block title %}REGISTER || {{ block.super }}{% endblock title %}
+{% load widget_tweaks %}
 
 {% block content %}
-    <div class="col-6 col-md-6 mx-auto">
-        <h1><b>Login</b></h1>
-        {% if messages %}
-        <ul class="messages">
-            {% for message in messages %}
-            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}><b>{{ message }}</b></li>
-            {% endfor %}
-        </ul>
-        {% endif %}
+    <div class="" align="" style="margin-left: 14rem;">
+        <div class="card" style="width: 40rem; margin-top: 2rem;">
+            <div class="card-header text-left"><b>Login</b></div>
+            <div class="card-body">
+                <form method="post">{% csrf_token %}
+                    {% for hidden in form.hidden_fields %}
+                    {{ hidden }}
+                    {% endfor %}
 
-        <form method="POST">{% csrf_token %}
-            {{ form.as_p }}
-            <div class="form-group row">
-                <label class="col-sm-2 col-form-label"></label>
-                <div class="col-sm-10">
-                    <button type="submit" class="btn btn-lg btn-block btn-info">Login</button>
-                </div>
+                    {% for field in form.visible_fields %}
+                    <div class="form-group row">
+                        <label class="col-md-4 col-form-label text-left"><b>{{ field.label_tag }}</b></label>
+                        {% if form.is_bound %}
+                        {% if field.errors %}
+                        {% render_field field class="form-control is-invalid" %}
+                        {% for error in field.errors %}
+                        <div class="invalid-feedback">
+                            {{ error }}
+                        </div>
+                        {% endfor %}
+                        {% else %}
+                        {% render_field field class="form-control is-valid" %}
+                        {% endif %}
+                        {% else %}
+                        <div class="col-md-8">
+                            {% render_field field class="form-control" %}
+                        </div>
+                        {% endif %}
+                    </div><!-- end of form -->
+                    {% endfor %}
+
+                    <div class="form-group row">
+                        <label class="col-sm-4 col-form-label"></label>
+                        <div class="col-sm-8">
+                            <button type="submit" class="btn btn-secondary btn-lg float-left btn-block">Login</button>
+                        </div>
+                    </div>
+                </form>
+            </div><!-- end of card body -->
+        </div><!-- end of card -->
+        <div class="col-6" style="margin-top: 2rem; margin-left: 6rem;">
+            {% if messages %}
+            <div class="messages">
+                {% for message in messages %}
+                <p {% if message.tags %} class="text-center {{ message.tags }}"{% endif %}>{{ message }}</p>
+                {% endfor %}
             </div>
-        </form>
-    </div>
-
-
+            {% endif %}
+        </div>
 {% endblock %}
