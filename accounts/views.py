@@ -15,16 +15,25 @@ User = get_user_model()
 # Create your views here.
 class UserLoginView(FormView):
     form_class = UserLoginForm
-    success_url = '/products/'
+    success_url = '/'
     template_name = 'accounts/login.html'
 
     def form_valid(self, form):
+        next_ = self.request.GET.get('next')
+        next_post = self.request.POST.get('next')
+        redirect_path = next_ or next_post or None
         email = form.cleaned_data.get('email')
         password = form.cleaned_data.get('password')
         user = authenticate(self.request, email=email, password=password)
 
         if user is not None:
             login(self.request, user)
+            try:
+                del self.request.session['guest_email_id']
+            except:
+                pass
+            if is_safe_url(redirect_path, self.request.get_host()):
+                return redirect(redirect_path)
         else:
             messages.error(self.request, 'Username or Password is not valid!')
             return redirect('login')

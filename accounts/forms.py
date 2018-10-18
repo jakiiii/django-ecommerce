@@ -79,7 +79,7 @@ class UserRegistrationForm(forms.ModelForm):
     def save(self, commit=True):
         user = super(UserRegistrationForm, self).save(commit=False)
         user.set_password(self.cleaned_data['password1'])
-        # user.active = True
+        user.active = False  # Send confirmation email
 
         if commit:
             user.save()
