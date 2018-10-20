@@ -116,9 +116,13 @@
                     </tr>
                     {% for product in object.cart.products.all %}
                     <tr>
-                        <th><a href="{{ product.get_absolute_url }}" class="btn text-dark font-weight-bold">{{ product }}</a></th>
+                        <td style="width: 350px;">
+                            {{ product }}
+                        </td>
                         <td width="150px" class="text-center">
+                            <a href="{{ product.get_absolute_url }}" alt="{{ product }}" >
                             <img src="{{ product.image.url }}" alt="{{ product }}" style="width: 100px; height: 60px;" class="img img-thumbnail" />
+                            </a>
                         </td>
                     </tr>
                     {% endfor %}
