@@ -1,7 +1,7 @@
 from django.shortcuts import render, Http404
 from django.views.generic import ListView, DetailView
 
-# from analytics.mixins import ObjectViewedMixin
+from analytics.mixins import ObjectViewedMixin
 
 from .models import Product
 from carts.models import Cart
@@ -15,7 +15,7 @@ class ProductListFeaturedView(ListView):
         return Product.objects.all().featured()
 
 
-class ProductDetailFeaturedView(DetailView):
+class ProductDetailFeaturedView(ObjectViewedMixin, DetailView):
     queryset = Product.objects.all().featured()
     template_name = 'products/product-detail-featured.html'
 
@@ -48,7 +48,7 @@ class ProductListView(ListView):
         return context
 
 
-class ProductDetailView(DetailView):
+class ProductDetailView(ObjectViewedMixin, DetailView):
     template_name = 'products/product_detail.html'
 
     def get_context_data(self, *args, **kwargs):
@@ -64,7 +64,7 @@ class ProductDetailView(DetailView):
         return instance
 
 
-class ProductDetailSlugView(DetailView):
+class ProductDetailSlugView(ObjectViewedMixin, DetailView):
     queryset = Product.objects.all()
     template_name = 'products/product_detail.html'
 
@@ -86,4 +86,5 @@ class ProductDetailSlugView(DetailView):
             instance = qs.first()
         except:
             raise Http404('Something is illegal!')
+        # object_viewed_signals.send(instance.__class__, instance=instance, request=self.request)
         return instance
