@@ -6,8 +6,8 @@ from django.contrib.messages.views import messages, SuccessMessageMixin
 
 
 from .forms import UserLoginForm, UserRegistrationForm, GuestForm
-
 from .models import GuestEmail
+from .signals import user_logged_in
 
 User = get_user_model()
 
@@ -28,6 +28,8 @@ class UserLoginView(FormView):
 
         if user is not None:
             login(self.request, user)
+            user_logged_in.send(user.__class__, instance=user, request=self.request)
+            # user_logged_in.send(user.__class__, instance=user, request=self.request)
             try:
                 del self.request.session['guest_email_id']
             except:

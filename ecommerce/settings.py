@@ -64,6 +64,8 @@ LOGOUT_REDIRECT_URL = 'home'
 
 # Custom User Model
 AUTH_USER_MODEL = 'accounts.User'
+FORCE_SESSION_TO_ONE = False
+FORCE_INACTIVE_END_SESSION = False
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
