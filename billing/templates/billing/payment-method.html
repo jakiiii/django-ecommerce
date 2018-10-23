@@ -7,11 +7,14 @@
         <div class="card">
             <div class="card-header">Your Payment Method</div>
             <div class="card-body">
-{#                <div class="stripe-payment-form" data-token="{{ publish_key }}" data-next-url="{% if next_url %}{{ next_url }}{% endif %}">#}
-{#                #}
-{#                </div>#}
+                <div class="stripe-payment-form" data-token="{{ publish_key }}" data-next-url="{% if next_url %}{{ next_url }}{% endif %}" data-btn-title='Adding Card'></div>
+            </div>
+        </div>
+    </div>
 
-                <form class="payment-form" action="/charge" method="post" id="payment-form"
+{% endblock %}
+
+<form class="payment-form" action="" method="post" id="payment-form"
                       data-token="{{ publish_key }}" data-next-url="{% if next_url %}{{ next_url }}{% endif %}">
                     <div class="form-row form-group">
                         <label for="card-element">Credit or debit card</label>
@@ -24,8 +27,3 @@
 
                     <button class="btn btn-sm btn-dark">Add Payment Method</button>
                 </form>
-            </div>
-        </div>
-    </div>
-
-{% endblock %}

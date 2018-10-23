@@ -1,3 +1,20 @@
+// Js Render
+var stripeFormModule = $(".stripe-payment-form");
+var stripeModuleToken = stripeFormModule.attr("data-token");
+var stripeModuleNextUrl = stripeFormModule.attr("data-next-url");
+var stripeModuleBtnTitle = stripeFormModule.attr("data-btn-title") || "Add Payment Method";
+
+var stripeTemplate = $.templates("#stripeTemplate");
+var stripeTemplateDataContext = {
+    publish_key: stripeModuleToken,
+    next_url: stripeModuleNextUrl,
+    btn_title: stripeModuleBtnTitle
+};
+var stripeTemplateHtml = stripeTemplate.render(stripeTemplateDataContext);
+stripeFormModule.html(stripeTemplateHtml);
+
+
+// Stripe Payment API
 // payment form (custom)
 var paymentForm = $(".payment-form");
 if (paymentForm.length > 1){
@@ -92,7 +109,7 @@ else if (paymentForm.length = 1) {
                 var successMsg = data.message || "Thank you! Your card is added.";
                 card.clear();
                 if (nextUrl) {
-                    successMsg = successMsg + "<br/><i class='fa fa-spin fa-spinner'></i> Redirecting..."
+                    successMsg = successMsg + "<br/><br/><i class='fa fa-spin fa-spinner'></i> Redirecting..."
                 }
                 if ($.confirm) {
                     $.confirm({
@@ -110,7 +127,7 @@ else if (paymentForm.length = 1) {
                 redirectToNext(nextUrl, 1500)
             },
             error: function (error) {
-                console.log(error)
+                $.alert(error)
             }
         })
     }
