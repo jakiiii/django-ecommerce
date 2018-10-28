@@ -79,59 +79,69 @@
         </div>
         {% else %}
 
+            {% if not has_card %}
+                <!-- enter created card here -->
+                <div class="col-6 col-md-6 mx-auto py-4">
+                    <div class="card">
+                        <div class="card-header">Your Payment Method</div>
+                        <div class="card-body">
+                            <div class="stripe-payment-form" data-token="{{ publish_key }}" data-next-url="{{ request.build_absolute_uri }}" data-btn-title='Adding Payment Method'></div>
+                        </div>
+                    </div>
+                </div>
+            {% else %}
+                <h1><b>Finalize CHECKOUT</b></h1><hr/>
+                <div class="row">
+                    <div class="col-6">
+                        <table class="table table-bordered">
+                            <tbody>
+                            <tr>
+                                <th width="250px"><b>Cart Total: </b></th>
+                                <td>{{ object.cart.total }}</td>
+                            </tr>
+                            <tr>
+                                <th width="250px"><b>Cart Shipping Total: </b></th>
+                                <td>{{ object.shipping_total }}</td>
+                            </tr>
+                            <tr>
+                                <th width="250px"><b>Order Total: </b></th>
+                                <td>{{ object.total }}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <form class="form" method="post" action="">{% csrf_token %}
+                            <button type="submit" class="btn btn-success">Checkout</button>
+                        </form>
+                    </div>
+                    <div class="col-6">
+                        <h5>Shipping Address:</h5>
+                        <p>{{ object.shipping_address.get_address }}</p>
+                        <h5>Billing Address:</h5>
+                        <p>{{ object.billing_address.get_address }}</p>
 
-        <h1><b>CHECKOUT</b></h1><hr/>
-        <div class="row">
-            <div class="col-6">
-                <table class="table table-bordered">
-                    <tbody>
-                    <tr>
-                        <th width="250px"><b>Cart Total: </b></th>
-                        <td>{{ object.cart.total }}</td>
-                    </tr>
-                    <tr>
-                        <th width="250px"><b>Cart Shipping Total: </b></th>
-                        <td>{{ object.shipping_total }}</td>
-                    </tr>
-                    <tr>
-                        <th width="250px"><b>Order Total: </b></th>
-                        <td>{{ object.total }}</td>
-                    </tr>
-                    </tbody>
-                </table>
-                <form class="form" method="post" action="">{% csrf_token %}
-                    <button type="submit" class="btn btn-success">Checkout</button>
-                </form>
-            </div>
-            <div class="col-6">
-                <h5>Shipping Address:</h5>
-                <p>{{ object.shipping_address.get_address }}</p>
-                <h5>Billing Address:</h5>
-                <p>{{ object.billing_address.get_address }}</p>
+                        <table class="table table-bordered">
+                            <tbody>
+                            <tr>
+                                <th colspan="2"><b>Cart Items</b></th>
+                            </tr>
+                            {% for product in object.cart.products.all %}
+                            <tr>
+                                <td style="width: 350px;">
+                                    {{ product }}
+                                </td>
+                                <td width="150px" class="text-center">
+                                    <a href="{{ product.get_absolute_url }}" alt="{{ product }}" >
+                                    <img src="{{ product.image.url }}" alt="{{ product }}" style="width: 100px; height: 60px;" class="img img-thumbnail" />
+                                    </a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
 
-                <table class="table table-bordered">
-                    <tbody>
-                    <tr>
-                        <th colspan="2"><b>Cart Items</b></th>
-                    </tr>
-                    {% for product in object.cart.products.all %}
-                    <tr>
-                        <td style="width: 350px;">
-                            {{ product }}
-                        </td>
-                        <td width="150px" class="text-center">
-                            <a href="{{ product.get_absolute_url }}" alt="{{ product }}" >
-                            <img src="{{ product.image.url }}" alt="{{ product }}" style="width: 100px; height: 60px;" class="img img-thumbnail" />
-                            </a>
-                        </td>
-                    </tr>
-                    {% endfor %}
-                    </tbody>
-                </table>
-
-            </div>
-        </div>
-
+                    </div>
+                </div>
+            {% endif %}
 
         {% endif %}
     {% endif %}

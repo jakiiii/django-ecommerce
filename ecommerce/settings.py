@@ -67,6 +67,10 @@ AUTH_USER_MODEL = 'accounts.User'
 FORCE_SESSION_TO_ONE = False
 FORCE_INACTIVE_END_SESSION = False
 
+# stripe secret and publish key
+STRIPE_SECRET_KEY = "sk_test_75kkoW8Uu4p38LCZGzyKZ0bB"
+STRIPE_PUB_KEY = "pk_test_PzZbTHlXOfKISCnJOn0edmlI"
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',

@@ -166,6 +166,3 @@ class Charge(models.Model):
     # risk_level = models.CharField(max_length=120, null=True, blank=True)
 
     objects = ChargeManager()
-
-    def __str__(self):
-        return self.billing_profile
