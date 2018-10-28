@@ -45,6 +45,21 @@ class BillingProfile(models.Model):
     def charge(self, order_obj, card=None):
         return Charge.objects.do(self, order_obj, card)
 
+    def get_card(self):
+        return self.card_set.all()
+
+    @property
+    def has_card(self):
+        card_qs = self.get_card()
+        return card_qs.exists()
+
+    @property
+    def default_card(self):
+        default_card = self.get_card().filter(default=True)
+        if default_card.exists():
+            return default_card.first()
+        return None
+
 
 def billing_profile_created_receiver(sender, instance, *args, **kwargs):
     print("ACTUAL API REQUEST send to strip / braintree")
@@ -99,6 +114,8 @@ class Card(models.Model):
     fingerprint = models.CharField(max_length=120, null=True, blank=True)
     last4 = models.CharField(max_length=4, null=True, blank=True)
     default = models.BooleanField(default=True)
+    active = models.BooleanField(default=True)
+    timestamp = models.DateTimeField(auto_now_add=True)
 
     objects = CardManager()
 
