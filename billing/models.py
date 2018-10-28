@@ -68,12 +68,10 @@ post_save.connect(user_created_receiver, sender=User)
 
 
 class CardManager(models.Manager):
-    def add_new(self, billing_profile, stripe_card_response):
-        if str(stripe_card_response.object) == "card":
-    # def add_new(self, billing_profile, token):
-    #     if token:
-    #         customer = stripe.Customer.retrieve(billing_profile.customer_id)
-    #         card_response = customer.sources.create(source=token)
+    def add_new(self, billing_profile, token):
+        if token:
+            customer = stripe.Customer.retrieve(billing_profile.customer_id)
+            stripe_card_response = customer.sources.create(source=token)
             new_card = self.model(
                 billing_profile=billing_profile,
                 stripe_id=stripe_card_response.id,
