@@ -114,10 +114,16 @@
                         </form>
                     </div>
                     <div class="col-6">
-                        <h5>Shipping Address:</h5>
+                        <h6><span class="font-weight-bold">Shipping Address:</span></h6>
                         <p>{{ object.shipping_address.get_address }}</p>
-                        <h5>Billing Address:</h5>
+                        <h6><span class="font-weight-bold">Billing Address:</span></h6>
                         <p>{{ object.billing_address.get_address }}</p>
+                        <h6>
+                            <span class="font-weight-bold">Payment Method: </span>
+                            {{ billing_profile.default_card }}
+                            (<a style="text-decoration: none;" href="{{ billing_profile.get_payment_method_url }}?next={{ request.build_absolute_uri }}">Change</a>)
+                        </h6>
+                        <br/>
 
                         <table class="table table-bordered">
                             <tbody>

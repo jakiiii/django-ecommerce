@@ -111,6 +111,9 @@ def checkout_home(request):
             request.session["cart_items"] = 0
             del request.session['cart_id']
             if not billing_profile.user:
+                '''
+                code
+                '''
                 billing_profile.set_cards_inactive()
             return redirect('success')
         else:

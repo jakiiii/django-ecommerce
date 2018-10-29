@@ -10,6 +10,7 @@ STRIPE_SECRET_KEY = getattr(settings, "STRIPE_SECRET_KEY", "sk_test_75kkoW8Uu4p3
 STRIPE_PUB_KEY = getattr(settings, "STRIPE_PUB_KEY", "pk_test_PzZbTHlXOfKISCnJOn0edmlI")
 stripe.api_key = STRIPE_SECRET_KEY
 
+
 # Create your views here.
 def payment_method_view(request):
     template_name = "billing/payment-method.html"
