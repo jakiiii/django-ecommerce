@@ -39,7 +39,7 @@ def object_viewed_receiver(sender, instance, request, *args, **kwargs):
     if request.user.is_authenticated:
         user = request.user
     new_view_object = ObjectViewed.objects.create(
-        user=request.user,
+        user=user,
         content_type=c_type,
         object_id=instance.id,
         ip_address=get_client_ip(request)
