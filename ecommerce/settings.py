@@ -31,15 +31,15 @@ ALLOWED_HOSTS = []
 
 # SMTP GMAIL Settings
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'mohin.nr@gmail.com'
-EMAIL_HOST_PASSWORD = 'SaDhIn065606Ja'
+EMAIL_HOST_USER = 'yourmail@gmail.com'
+EMAIL_HOST_PASSWORD = 'yourpassword'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-DEFAULT_FROM_EMAIL = 'Python eCommerce Testing Mail (mohin.nr@gmail.com)'
+DEFAULT_FROM_EMAIL = 'Python eCommerce Testing Mail (yourmail@gmail.com)'
 
 
 MANAGERS = [
-    ('Jaki', 'mohin.nr@gmail.com'),
+    ('Jaki', 'yourmail@gmail.com'),
 ]
 
 ADMINS = MANAGERS
