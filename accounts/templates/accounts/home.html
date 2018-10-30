@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block title %}Home || {{ block.super }}{% endblock title %}
+{% load widget_tweaks %}
+
+{% block content %}
+    <div class="py-4">
+        <p class="btn btn-lg btn-secondary">{{ request.user }}</p>
+    </div>
+{% endblock %}

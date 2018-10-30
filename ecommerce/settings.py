@@ -31,15 +31,15 @@ ALLOWED_HOSTS = []
 
 # SMTP GMAIL Settings
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'yourmail'
-EMAIL_HOST_PASSWORD = 'yourpassword'
+EMAIL_HOST_USER = 'mohin.nr@gmail.com'
+EMAIL_HOST_PASSWORD = 'SaDhIn065606Ja'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-DEFAULT_FROM_EMAIL = 'Python eCommerce Testing Mail (yourmail)'
+DEFAULT_FROM_EMAIL = 'Python eCommerce Testing Mail (mohin.nr@gmail.com)'
 
 
 MANAGERS = [
-    ('Jaki', 'yourmail'),
+    ('Jaki', 'mohin.nr@gmail.com'),
 ]
 
 ADMINS = MANAGERS
@@ -74,8 +74,11 @@ LOCAL_APPS = [
 
 INSTALLED_APPS += THIRD_PARTY_APPS + LOCAL_APPS
 
-# LOGOUT URL
+# LOGIN AND LOGOUT URL
+LOGOUT_URL = '/logout/'
 LOGOUT_REDIRECT_URL = 'home'
+LOGIN_URL = '/account/login/'
+LOGIN_REDIRECT_URL = '/'
 
 # Custom User Model
 AUTH_USER_MODEL = 'accounts.User'
