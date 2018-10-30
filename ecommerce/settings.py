@@ -27,7 +27,22 @@ SECRET_KEY = 'ypu%*nzf4(*a3cgf#m5!$a91z6kof(%sf6t@dho(ua*%pkxo9@'
 DEBUG = True
 
 ALLOWED_HOSTS = []
+# ALLOWED_HOSTS = ['127.0.0.1']
 
+# SMTP GMAIL Settings
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'yourmail'
+EMAIL_HOST_PASSWORD = 'yourpassword'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+DEFAULT_FROM_EMAIL = 'Python eCommerce Testing Mail (yourmail)'
+
+
+MANAGERS = [
+    ('Jaki', 'yourmail'),
+]
+
+ADMINS = MANAGERS
 
 # Application definition
 
