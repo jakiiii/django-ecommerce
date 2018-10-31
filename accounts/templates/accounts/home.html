@@ -4,6 +4,61 @@
 
 {% block content %}
     <div class="py-4">
-        <p class="btn btn-lg btn-secondary">{{ request.user }}</p>
+        <div class="row">
+            <div class="col-3 col-md-3">
+                <div class="card">
+                    <div class="card-header">Support</div>
+                    <div class="card-body">
+                        <ul class="list-group">
+                            <li class="list-group-item"><a href="" style="text-decoration: none;">About</a></li>
+                            <li class="list-group-item"><a href="{% url 'contact' %}" style="text-decoration: none;">Contact</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div><!-- end of col-3 -->
+            <div class="col-3 col-md-3">
+                <div class="card">
+                    <div class="card-header">Billing</div>
+                    <div class="card-body">
+                        <ul class="list-group">
+                            <li class="list-group-item"><a href="" style="text-decoration: none;">Address</a></li>
+                            <li class="list-group-item"><a href="" style="text-decoration: none;">Orders</a></li>
+                            <li class="list-group-item"><a href="{% url 'payment-method' %}" style="text-decoration: none;">Payment Method</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div><!-- end of col-3 -->
+            <div class="col-3 col-md-3">
+                <div class="card">
+                    <div class="card-header">Account Settings</div>
+                    <div class="card-body">
+                        <ul class="list-group">
+                            <li class="list-group-item"><a href="" style="text-decoration: none;">Name</a></li>
+                            <li class="list-group-item"><a href="" style="text-decoration: none;">Reset Password</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div><!-- end of col-3 -->
+            <div class="col-3 col-md-3">
+                <div class="card">
+                    <div class="card-header">Preference</div>
+                    <div class="card-body">
+                        <ul class="list-group">
+                            <li class="list-group-item"><a href="" style="text-decoration: none;">Email Marketing</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div><!-- end of col-3 -->
+            <div class="col-3 col-md-3">
+                <div class="card">
+                    <div class="card-header">History</div>
+                    <div class="card-body">
+                        <ul class="list-group">
+                            <li class="list-group-item"><a href="" style="text-decoration: none;">Products</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div><!-- end of col-3 -->
+        </div><!-- end of row -->
     </div>
 {% endblock %}

@@ -77,7 +77,7 @@ INSTALLED_APPS += THIRD_PARTY_APPS + LOCAL_APPS
 # LOGIN AND LOGOUT URL
 LOGOUT_URL = '/logout/'
 LOGOUT_REDIRECT_URL = 'home'
-LOGIN_URL = '/account/login/'
+LOGIN_URL = '/login/'
 LOGIN_REDIRECT_URL = '/'
 
 # Custom User Model

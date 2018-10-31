@@ -16,7 +16,7 @@ User = get_user_model()
 # Create your views here.
 class AccountsHomeView(LoginRequiredMixin, DetailView):
     template_name = 'accounts/home.html'
-    # login_url = '/account/login/'
+    # login_url = '/login/'
     redirect_field_name = 'next'
 
     def get_object(self, queryset=None):
@@ -26,7 +26,7 @@ class AccountsHomeView(LoginRequiredMixin, DetailView):
 class UserLoginView(FormView):
     form_class = UserLoginForm
     template_name = 'accounts/login.html'
-    success_url = '/account/home/'
+    success_url = '/account/'
     default_next = '/'
 
     def form_valid(self, form):
