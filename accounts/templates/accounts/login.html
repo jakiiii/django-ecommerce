@@ -8,31 +8,7 @@
             <div class="card-header text-left"><b>Login</b></div>
             <div class="card-body">
                 <form method="post">{% csrf_token %}
-                    {% for hidden in form.hidden_fields %}
-                    {{ hidden }}
-                    {% endfor %}
-
-                    {% for field in form.visible_fields %}
-                    <div class="form-group row">
-                        <label class="col-md-4 col-form-label text-left"><b>{{ field.label_tag }}</b></label>
-                        {% if form.is_bound %}
-                        {% if field.errors %}
-                        {% render_field field class="form-control is-invalid" %}
-                        {% for error in field.errors %}
-                        <div class="invalid-feedback">
-                            {{ error }}
-                        </div>
-                        {% endfor %}
-                        {% else %}
-                        {% render_field field class="form-control is-valid" %}
-                        {% endif %}
-                        {% else %}
-                        <div class="col-md-8">
-                            {% render_field field class="form-control" %}
-                        </div>
-                        {% endif %}
-                    </div><!-- end of form -->
-                    {% endfor %}
+                    {% include 'accounts/snippets/widget_form.html' %}
 
                     <div class="form-group row">
                         <label class="col-sm-4 col-form-label"></label>
@@ -41,7 +17,8 @@
                         </div>
                     </div>
                 </form>
-                <a href="{% url 'register' %}" class="float-right" style="text-decoration: none;">Create new account.</a>
+                <a href="{% url 'register' %}" class="float-left" style="text-decoration: none;">Create new account.</a>
+                <a href="{% url 'password_reset' %}" class="float-right" style="text-decoration: none;">Forger your password.</a>
             </div><!-- end of card body -->
         </div><!-- end of card -->
         <div class="col-6" style="margin-top: 2rem; margin-left: 6rem;">

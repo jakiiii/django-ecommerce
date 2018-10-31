@@ -56,7 +56,7 @@ class UserRegistrationView(SuccessMessageMixin, CreateView):
     form_class = UserRegistrationForm
     template_name = 'accounts/register.html'
     success_message = 'Registration successful.'
-    success_url = '/login/'
+    success_url = '/account/login/'
 
 
 def guest_register_view(request):
