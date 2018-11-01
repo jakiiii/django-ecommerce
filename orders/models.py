@@ -7,7 +7,7 @@ from carts.models import Cart
 from billing.models import BillingProfile
 from address.models import Address
 
-from ecommerce.utls import unique_order_id_generator
+from ecommerce.utils import unique_order_id_generator
 
 ORDER_STATUS_CHOICES = (
     ('created', 'Created'),

@@ -10,7 +10,7 @@ from tags.models import Tag
 
 from django.urls import reverse
 
-from ecommerce.utls import unique_slug_generator
+from ecommerce.utils import unique_slug_generator
 fs = FileSystemStorage(location='media')
 
 

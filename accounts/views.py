@@ -38,6 +38,9 @@ class UserLoginView(FormView):
         user = authenticate(self.request, email=email, password=password)
 
         if user is not None:
+            if not user.is_active:
+                messages.error(self.request, 'User is Inactive! Please check your email and activation confirm.')
+                return super(UserLoginView, self).form_invalid(form)
             login(self.request, user)
             user_logged_in.send(user.__class__, instance=user, request=self.request)
             try:

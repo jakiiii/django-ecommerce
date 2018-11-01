@@ -26,8 +26,8 @@ SECRET_KEY = 'ypu%*nzf4(*a3cgf#m5!$a91z6kof(%sf6t@dho(ua*%pkxo9@'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-# ALLOWED_HOSTS = ['127.0.0.1']
+# ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1']
 
 # SMTP GMAIL Settings
 EMAIL_HOST = 'smtp.gmail.com'
@@ -35,11 +35,12 @@ EMAIL_HOST_USER = 'youtmail@gmail.com'
 EMAIL_HOST_PASSWORD = 'htqkdjpqwmlnrmwb'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-DEFAULT_FROM_EMAIL = 'Python eCommerce Testing Mail (yourmail@gmail.com)'
+DEFAULT_FROM_EMAIL = 'Jqurity Python eCommerce Testing Mail (jaki@jqurity.com)'
+BASE_URL = '127.0.0.1:8000'
 
 
 MANAGERS = [
-    ('Jaki', 'yourmail@gmail.com'),
+    ('Jaki', 'jaki@jqurity.com'),
 ]
 
 ADMINS = MANAGERS
