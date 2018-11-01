@@ -31,8 +31,8 @@ ALLOWED_HOSTS = []
 
 # SMTP GMAIL Settings
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'yourmail@gmail.com'
-EMAIL_HOST_PASSWORD = 'yourpassword'
+EMAIL_HOST_USER = 'youtmail@gmail.com'
+EMAIL_HOST_PASSWORD = 'htqkdjpqwmlnrmwb'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL = 'Python eCommerce Testing Mail (yourmail@gmail.com)'
