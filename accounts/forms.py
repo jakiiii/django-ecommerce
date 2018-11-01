@@ -4,6 +4,8 @@ from django.contrib.auth.forms import ReadOnlyPasswordHashField
 
 User = get_user_model()
 
+from .models import EmailActivation
+
 
 # Create your form here.
 class UserAdminCreationForm(forms.ModelForm):
@@ -79,8 +81,9 @@ class UserRegistrationForm(forms.ModelForm):
     def save(self, commit=True):
         user = super(UserRegistrationForm, self).save(commit=False)
         user.set_password(self.cleaned_data['password1'])
-        user.is_active = False  # Send confirmation email
-
+        user.is_active = False  # Send confirmation email via signals
+        # obj = EmailActivation.objects.create(user=user)
+        # obj.send_activation()
         if commit:
             user.save()
         return user
