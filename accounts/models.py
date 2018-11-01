@@ -23,7 +23,7 @@ class UserManager(BaseUserManager):
             last_name=last_name
         )
         user.set_password(password)
-        user.active = is_active
+        user.is_active = is_active
         user.staff = is_staff
         user.admin = is_admin
         user.save(using=self._db)
@@ -56,7 +56,6 @@ class User(AbstractBaseUser):
     first_name = models.CharField(max_length=120)
     last_name = models.CharField(max_length=120)
     email = models.EmailField(max_length=32, unique=True, verbose_name='Email')
-    active = models.BooleanField(default=True)
     is_active = models.BooleanField(default=True)
     staff = models.BooleanField(default=False)
     admin = models.BooleanField(default=False)

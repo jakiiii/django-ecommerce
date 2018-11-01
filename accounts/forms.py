@@ -43,7 +43,7 @@ class UserAdminChangeForm(forms.ModelForm):
             'last_name',
             'email',
             'password',
-            'active',
+            'is_active',
             'admin'
         )
 
@@ -79,7 +79,7 @@ class UserRegistrationForm(forms.ModelForm):
     def save(self, commit=True):
         user = super(UserRegistrationForm, self).save(commit=False)
         user.set_password(self.cleaned_data['password1'])
-        user.active = False  # Send confirmation email
+        user.is_active = False  # Send confirmation email
 
         if commit:
             user.save()
