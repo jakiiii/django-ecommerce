@@ -2,12 +2,12 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.utils.http import is_safe_url
-from django.views.generic import FormView, CreateView, DetailView, TemplateView
+from django.views.generic import FormView, CreateView, DetailView, View
 from django.contrib.messages.views import messages, SuccessMessageMixin
 
 
 from .forms import UserLoginForm, UserRegistrationForm, GuestForm
-from .models import GuestEmail
+from .models import GuestEmail, EmailActivation
 from .signals import user_logged_in
 
 User = get_user_model()
@@ -21,6 +21,17 @@ class AccountsHomeView(LoginRequiredMixin, DetailView):
 
     def get_object(self, queryset=None):
         return self.request.user
+
+
+class AccountActivateView(View):
+    def get(self, request, *args, **kwargs):
+        context = {
+
+        }
+        return render(request, 'registration/activation_error.html', context)
+
+    def post(self, request, *args, **kwargs):
+        pass
 
 
 class UserLoginView(FormView):

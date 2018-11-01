@@ -31,7 +31,7 @@ ALLOWED_HOSTS = ['127.0.0.1']
 
 # SMTP GMAIL Settings
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'mohin.nr@gmail.com'
+EMAIL_HOST_USER = 'yourmail@gmail.com'
 EMAIL_HOST_PASSWORD = 'zhlktmifhcwizele'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
