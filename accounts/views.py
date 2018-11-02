@@ -2,6 +2,8 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.utils.http import is_safe_url
+from django.urls import reverse
+from django.utils.safestring import mark_safe
 from django.views.generic import FormView, CreateView, DetailView, View
 from django.contrib.messages.views import messages, SuccessMessageMixin
 
@@ -24,7 +26,23 @@ class AccountsHomeView(LoginRequiredMixin, DetailView):
 
 
 class AccountActivateView(View):
-    def get(self, request, *args, **kwargs):
+    def get(self, request, key, *args, **kwargs):
+        qs = EmailActivation.objects.filter(key__iexact=key)
+        confirm_qs = qs.conformable()
+        if confirm_qs.count() == 1:
+            obj = confirm_qs.first()
+            obj.activate()
+            messages.success(self.request, "Your email has been confirmed. You can login now.")
+            return redirect('login')
+        else:
+            activated_qs = qs.filter(key__iexact=key, activated=True)
+            if activated_qs.exists():
+                reset_link = reverse('password_reset')
+                msg = """Your email has already confirmed!
+                Did you mean <a href="{link}">reset your password</a>?
+                """.format(link=reset_link)
+                messages.info(self.request, mark_safe(msg))
+                return redirect('login')
         context = {
 
         }
@@ -69,7 +87,7 @@ class UserLoginView(FormView):
 class UserRegistrationView(SuccessMessageMixin, CreateView):
     form_class = UserRegistrationForm
     template_name = 'accounts/register.html'
-    success_message = 'Registration successful.'
+    success_message = 'Registration successful. We send activation instruction on your email.'
     success_url = '/account/login/'
 
 
