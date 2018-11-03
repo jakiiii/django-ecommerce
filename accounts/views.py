@@ -5,10 +5,11 @@ from django.utils.http import is_safe_url
 from django.urls import reverse
 from django.utils.safestring import mark_safe
 from django.views.generic import FormView, CreateView, DetailView, View
+from django.views.generic.edit import FormMixin
 from django.contrib.messages.views import messages, SuccessMessageMixin
 
 
-from .forms import UserLoginForm, UserRegistrationForm, GuestForm
+from .forms import UserLoginForm, UserRegistrationForm, ReactivateEmailForm, GuestForm
 from .models import GuestEmail, EmailActivation
 from .signals import user_logged_in
 
@@ -25,7 +26,10 @@ class AccountsHomeView(LoginRequiredMixin, DetailView):
         return self.request.user
 
 
-class AccountActivateView(View):
+class AccountActivateView(FormMixin, View):
+    success_url = '/login/'
+    form_class = ReactivateEmailForm
+
     def get(self, request, key, *args, **kwargs):
         qs = EmailActivation.objects.filter(key__iexact=key)
         confirm_qs = qs.conformable()
@@ -44,12 +48,26 @@ class AccountActivateView(View):
                 messages.info(self.request, mark_safe(msg))
                 return redirect('login')
         context = {
-
+            'form': self.get_form()
         }
         return render(request, 'registration/activation_error.html', context)
 
     def post(self, request, *args, **kwargs):
-        pass
+        form = self.get_form()
+        if form.is_valid():
+            return self.form_valid(form)
+        else:
+            return self.form_invalid(form)
+
+    def form_valid(self, form):
+        # msg = "Your account activation link sent. Please check your email."
+        # messages.success(self.request, msg)
+        # email = form.cleaned_data.get("email")
+        # obj = EmailActivation.objects.email_exists(email).first()
+        # user = obj.user
+        # new_activation = EmailActivation.objects.create(user=user, email=email)
+        # new_activation.send_activation()
+        # return super(AccountActivateView, self).form_valid(form)
 
 
 class UserLoginView(FormView):
