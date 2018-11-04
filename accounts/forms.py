@@ -5,7 +5,7 @@ from django.contrib.auth.forms import ReadOnlyPasswordHashField
 from django.contrib.messages.views import messages
 from django.utils.safestring import mark_safe
 
-from .models import EmailActivation
+from .models import EmailActivation, GuestEmail
 from .signals import user_logged_in
 
 User = get_user_model()
@@ -102,31 +102,6 @@ class UserLoginForm(forms.Form):
             pass
         return data
 
-    # def form_valid(self, form):
-    #     next_ = self.request.GET.get('next')
-    #     next_post = self.request.POST.get('next')
-    #     redirect_path = next_ or next_post or None
-    #     email = form.cleaned_data.get('email')
-    #     password = form.cleaned_data.get('password')
-    #     user = authenticate(self.request, email=email, password=password)
-    #
-    #     if user is not None:
-    #         if not user.is_active:
-    #             messages.error(self.request, 'User is Inactive! Please check your email and activation confirm.')
-    #             return super(UserLoginView, self).form_invalid(form)
-    #         login(self.request, user)
-    #         user_logged_in.send(user.__class__, instance=user, request=self.request)
-    #         try:
-    #             del self.request.session['guest_email_id']
-    #         except:
-    #             pass
-    #         if is_safe_url(redirect_path, self.request.get_host()):
-    #             return redirect(redirect_path)
-    #     else:
-    #         messages.error(self.request, 'Username or Password is not valid!')
-    #         return redirect('login')
-    #     return super(UserLoginView, self).form_valid(form)
-
 
 class UserRegistrationForm(forms.ModelForm):
     password1 = forms.CharField(max_length=32, label='password', widget=forms.PasswordInput)
@@ -173,5 +148,21 @@ class ReactivateEmailForm(forms.Form):
         return email
 
 
-class GuestForm(forms.Form):
-    email = forms.EmailField(max_length=32, label="Email", widget=forms.EmailInput(attrs={"class": "form-control"}))
+class GuestForm(forms.ModelForm):
+    # email = forms.EmailField(max_length=32, label="Email", widget=forms.EmailInput(attrs={"class": "form-control"}))
+    class Meta:
+        model = GuestEmail
+        fields = [
+            'email'
+        ]
+
+    def __init__(self, request, *args, **kwargs):
+        self.request = request
+        super(GuestForm, self).__init__(*args, **kwargs)
+
+    def save(self, commit=True):
+        obj = super(GuestForm, self).save(commit=False)
+        if commit:
+            obj.save()
+            self.request.session['guest_email_id'] = obj.id
+        return obj

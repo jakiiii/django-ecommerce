@@ -62,7 +62,6 @@ def cart_update(request):
     # return redirect(product_obj.get_absolute_url())
 
         if request.is_ajax():  # Asynchronous Javascript And XML / JSON
-            print("ajax request")
             json_data = {
                 "added": added,
                 "removed": not added,
@@ -80,7 +79,7 @@ def checkout_home(request):
         return redirect('cart')
 
     login_form = UserLoginForm(request=request)
-    guest_form = GuestForm()
+    guest_form = GuestForm(request=request)
     address_form = AddressForm()
     billing_address_id = request.session.get("billing_address_id", None)
     shipping_address_id = request.session.get("shipping_address_id", None)
