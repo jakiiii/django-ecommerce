@@ -98,23 +98,15 @@ class UserRegistrationView(SuccessMessageMixin, CreateView):
     success_url = '/account/login/'
 
 
-def guest_register_view(request):
-    form = GuestForm(request.POST or None)
-    template_name = 'accounts/login.html'
-    context = {
-        "form": form
-    }
+class GuestRegisterForm(NextUrlMixin, FormView):
+    form_class = GuestForm
+    default_next = '/register/'
 
-    next_ = request.GET.get('next')
-    next_post = request.POST.get('next')
-    redirect_path = next_ or next_post or None
+    def form_invalid(self, form):
+        return redirect(self.default_next)
 
-    if form.is_valid():
+    def form_valid(self, form):
         email = form.cleaned_data.get("email")
         new_guest_email = GuestEmail.objects.create(email=email)
-        request.session['guest_email_id'] = new_guest_email.id
-        if is_safe_url(redirect_path, request.get_host()):
-            return redirect(redirect_path)
-        else:
-            return redirect('register')
-    return redirect('register')
+        self.request.session['guest_email_id'] = new_guest_email.id
+        return redirect(self.get_next_url())
