@@ -4,12 +4,12 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.utils.http import is_safe_url
 from django.urls import reverse
 from django.utils.safestring import mark_safe
-from django.views.generic import FormView, CreateView, DetailView, View
+from django.views.generic import FormView, CreateView, DetailView, UpdateView, View
 from django.views.generic.edit import FormMixin
 from django.contrib.messages.views import messages, SuccessMessageMixin
 
 
-from .forms import UserLoginForm, UserRegistrationForm, ReactivateEmailForm, GuestForm
+from .forms import UserLoginForm, UserNameChangeForm, UserRegistrationForm, ReactivateEmailForm, GuestForm
 from .models import GuestEmail, EmailActivation
 from ecommerce.mixins import NextUrlMixin, RequestFormAttachMixin
 
@@ -89,6 +89,22 @@ class UserLoginView(NextUrlMixin, RequestFormAttachMixin, FormView):
     def form_valid(self, form):
         next_path = self.get_next_url()
         return redirect(next_path)
+
+
+class UserInfoUpdateView(LoginRequiredMixin, UpdateView):
+    template_name = 'accounts/update_user_info.html'
+    form_class = UserNameChangeForm
+
+    def get_object(self):
+        return self.request.user
+
+    def get_context_data(self, *args, **kwargs):
+        context = super(UserInfoUpdateView, self).get_context_data(*args, **kwargs)
+        context['title'] = 'Update Profile Information'
+        return context
+
+    def get_success_url(self):
+        return reverse('user-account')
 
 
 class UserRegistrationView(SuccessMessageMixin, CreateView):

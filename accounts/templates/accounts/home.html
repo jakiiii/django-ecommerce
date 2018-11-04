@@ -30,12 +30,11 @@
             </div><!-- end of col-3 -->
             <div class="col-3 col-md-3">
                 <div class="card">
-                    <div class="card-header">Account Settings</div>
+                    <div class="card-header">Profile Settings</div>
                     <div class="card-body">
                         <ul class="list-group">
-                            <li class="list-group-item"><a href="" style="text-decoration: none;">Name</a></li>
+                            <li class="list-group-item"><a href="{% url 'update-user-name' %}" style="text-decoration: none;">Change Name</a></li>
                             <li class="list-group-item"><a href="{% url 'password_change' %}" style="text-decoration: none;">Change Password</a></li>
-                            <li class="list-group-item"><a href="{% url 'password_reset' %}" style="text-decoration: none;">Reset Password</a></li>
                         </ul>
                     </div>
                 </div>

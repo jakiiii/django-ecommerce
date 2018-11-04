@@ -39,6 +39,18 @@ class UserAdminCreationForm(forms.ModelForm):
         return user
 
 
+class UserNameChangeForm(forms.ModelForm):
+    first_name = forms.CharField(max_length=120, label='First Name', required=False)
+    last_name = forms.CharField(max_length=120, label='Last Name', required=False)
+
+    class Meta:
+        model = User
+        fields = [
+            'first_name',
+            'last_name'
+        ]
+
+
 class UserAdminChangeForm(forms.ModelForm):
     password = ReadOnlyPasswordHashField()
 
@@ -127,8 +139,6 @@ class UserRegistrationForm(forms.ModelForm):
         user = super(UserRegistrationForm, self).save(commit=False)
         user.set_password(self.cleaned_data['password1'])
         user.is_active = False  # Send confirmation email via signals
-        # obj = EmailActivation.objects.create(user=user)
-        # obj.send_activation()
         if commit:
             user.save()
         return user
@@ -149,7 +159,6 @@ class ReactivateEmailForm(forms.Form):
 
 
 class GuestForm(forms.ModelForm):
-    # email = forms.EmailField(max_length=32, label="Email", widget=forms.EmailInput(attrs={"class": "form-control"}))
     class Meta:
         model = GuestEmail
         fields = [

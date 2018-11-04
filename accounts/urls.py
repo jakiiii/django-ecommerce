@@ -7,6 +7,7 @@ from .views import (
     UserRegistrationView,
     GuestRegisterForm,
     AccountsHomeView,
+    UserInfoUpdateView,
     AccountActivateView
 )
 
@@ -17,5 +18,6 @@ urlpatterns = [
     path('', AccountsHomeView.as_view(), name='user-account'),
     path('email/confirmed/<key>/', AccountActivateView.as_view(), name='email-activate'),
     path('email/resend-activation/', AccountActivateView.as_view(), name='resend-activation'),
+    path('update/name/', UserInfoUpdateView.as_view(), name='update-user-name'),
     path('logout/', LogoutView.as_view(), {'next_page': settings.LOGOUT_REDIRECT_URL}, name='logout'),
 ]
