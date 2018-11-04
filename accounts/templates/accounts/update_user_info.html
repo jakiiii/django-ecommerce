@@ -4,7 +4,12 @@
 {% block content %}
     <div class="" align="" style="margin-left: 14rem;">
         <div class="card" style="width: 40rem; margin-top: 2rem;">
-            <div class="card-header text-left"><b>{{ title }}</b></div>
+            <div class="card-header text-left">
+                <b>{{ title }}</b>
+                <span class="float-right">
+                    <a href="{% url 'user-account' %}" style="text-decoration: none;">Back to Profile</a>
+                </span>
+            </div>
             <div class="card-body">
                 <form method="post">{% csrf_token %}
                     {% include 'accounts/snippets/widget_form.html' %}
@@ -20,7 +25,7 @@
                     <div class="form-group row">
                         <label class="col-sm-4 col-form-label"></label>
                         <div class="col-sm-8">
-                            <button type="submit" class="btn btn-secondary btn-lg float-left btn-block">Changed</button>
+                            <button type="submit" class="btn btn-secondary">Changed</button>
                         </div>
                     </div>
                 </form>

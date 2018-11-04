@@ -1,6 +1,6 @@
 from django.shortcuts import render, Http404
 from django.views.generic import ListView, DetailView
-
+from django.contrib.auth.mixins import LoginRequiredMixin
 from analytics.mixins import ObjectViewedMixin
 
 from .models import Product
@@ -35,17 +35,12 @@ class ProductListView(ListView):
 
     def get_context_data(self, *args, **kwargs):
         context = super(ProductListView, self).get_context_data(*args, **kwargs)
-        context['title'] = '{}'.format(self.get_object().title)
         cart_obj, new_obj = Cart.objects.new_or_get(self.request)
         context['cart'] = cart_obj
         return context
 
     def get_queryset(self, *args, **kwargs):
         return Product.objects.all().featured()
-
-    def get_context_data(self, *args, **kwargs):
-        context = super(ProductListView, self).get_context_data(*args, **kwargs)
-        return context
 
 
 class ProductDetailView(ObjectViewedMixin, DetailView):
