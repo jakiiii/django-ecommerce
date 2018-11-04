@@ -11,7 +11,7 @@ from django.contrib.messages.views import messages, SuccessMessageMixin
 
 from .forms import UserLoginForm, UserRegistrationForm, ReactivateEmailForm, GuestForm
 from .models import GuestEmail, EmailActivation
-from .signals import user_logged_in
+from ecommerce.mixins import NextUrlMixin, RequestFormAttachMixin
 
 User = get_user_model()
 
@@ -80,36 +80,15 @@ class AccountActivateView(FormMixin, View):
         return render(self.request, 'registration/activation_error.html', context)
 
 
-class UserLoginView(FormView):
+class UserLoginView(NextUrlMixin, RequestFormAttachMixin, FormView):
     form_class = UserLoginForm
     template_name = 'accounts/login.html'
     success_url = '/account/'
-    default_next = '/'
+    default_next = '/account/'
 
     def form_valid(self, form):
-        next_ = self.request.GET.get('next')
-        next_post = self.request.POST.get('next')
-        redirect_path = next_ or next_post or None
-        email = form.cleaned_data.get('email')
-        password = form.cleaned_data.get('password')
-        user = authenticate(self.request, email=email, password=password)
-
-        if user is not None:
-            if not user.is_active:
-                messages.error(self.request, 'User is Inactive! Please check your email and activation confirm.')
-                return super(UserLoginView, self).form_invalid(form)
-            login(self.request, user)
-            user_logged_in.send(user.__class__, instance=user, request=self.request)
-            try:
-                del self.request.session['guest_email_id']
-            except:
-                pass
-            if is_safe_url(redirect_path, self.request.get_host()):
-                return redirect(redirect_path)
-        else:
-            messages.error(self.request, 'Username or Password is not valid!')
-            return redirect('login')
-        return super(UserLoginView, self).form_valid(form)
+        next_path = self.get_next_url()
+        return redirect(next_path)
 
 
 class UserRegistrationView(SuccessMessageMixin, CreateView):
