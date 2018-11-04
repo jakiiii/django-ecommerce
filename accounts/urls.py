@@ -16,5 +16,6 @@ urlpatterns = [
     path('register/guest/', guest_register_view, name='guest-register'),
     path('', AccountsHomeView.as_view(), name='user-account'),
     path('email/confirmed/<key>/', AccountActivateView.as_view(), name='email-activate'),
+    path('email/resend-activation/', AccountActivateView.as_view(), name='resend-activation'),
     path('logout/', LogoutView.as_view(), {'next_page': settings.LOGOUT_REDIRECT_URL}, name='logout'),
 ]

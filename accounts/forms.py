@@ -92,18 +92,18 @@ class UserRegistrationForm(forms.ModelForm):
 
 
 class ReactivateEmailForm(forms.Form):
-    email = forms.EmailField()
+    email = forms.EmailField(max_length=32)
 
     def clean_email(self):
         email = self.cleaned_data.get('email')
         qs = EmailActivation.objects.email_exists(email)
-        if not qs:
+        if not qs.exists():
             register_link = reverse('register')
-            msg = """This email does not exists. 
-            Would you like to <a href={link}>register</a>""".format(link=register_link)
-            raise ValueError(mark_safe(msg))
+            msg = """This email does not exists or your account is suspend!. 
+            Would you like to <a href={link}>register</a>?""".format(link=register_link)
+            raise forms.ValidationError(mark_safe(msg))
         return email
 
 
 class GuestForm(forms.Form):
-    email = forms.EmailField(max_length=32, widget=forms.EmailInput(attrs={"class": "form-control"}))
+    email = forms.EmailField(max_length=32, label="Email", widget=forms.EmailInput(attrs={"class": "form-control"}))

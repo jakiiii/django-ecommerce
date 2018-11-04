@@ -5,7 +5,30 @@
 {% block content %}
     <div class="row py-4">
         <div class="col-12 text-center">
-            <h1 class='my-5 py-5'>Activation Error! Please try again.</h1>
+            {% if key %}
+                <h1 class='my-5 py-5'>Activation Error! Please try again.</h1>
+            {% else %}
+                <h1>Reactivate your Email.</h1>
+            {% endif %}
+        </div>
+        <div class="col-12">
+            <div class="col-6 mx-auto">
+                <div class="card">
+                    <div class="card-header text-left"><b>Resend Activation</b></div>
+                    <div class="card-body">
+                        <form method="post">{% csrf_token %}
+                            {% include 'accounts/snippets/widget_form.html' %}
+                            <div class="form-group row">
+                                <label class="col-sm-4 col-form-label"></label>
+
+                                <div class="col-sm-8">
+                                    <button type="submit" class="btn btn-secondary float-left btn-block">Resend Email</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div><!-- end of card body -->
+                </div><!-- end of card -->
+            </div>
         </div>
     </div>
 {% endblock %}
