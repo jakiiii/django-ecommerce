@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block title %}User History || {{ block.super }}{% endblock title %}
+
+{% block content %}
+    <h1>Product View History</h1><hr/>
+    <div class="row align-self-center">
+        {% for product in product_list %}
+        <div class="col-3 py-2" style="margin-left: 10px;">
+            <div class="card" style="width: 18rem;">
+                <a href="{{ product.get_absolute_url }}">
+                    <img class="card-img-top" src="{{ product.image.url }}" alt="{{ product.title }}" width="300px" height="150px">
+                </a>
+                <div class="card-body" style="height: 185px;">
+                    <h5 class="card-title">{{ product.title }}</h5>
+                    <p>{{ product.description | linebreaks | truncatewords:3 }}</p>
+              </div>
+                <div class="card-footer">
+                    <div class="row">
+                        <div class="col-5">
+                            <a href="{{ product.get_absolute_url }}" class="btn btn-info">View Detail</a>
+                        </div>
+                        <div class="col-5">
+                            {% include 'products/snippets/update-cart.html' with product=product.content_obj %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+{% endblock %}

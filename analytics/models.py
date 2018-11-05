@@ -15,6 +15,26 @@ FORCE_SESSION_TO_ONE = getattr(settings, 'FORCE_SESSION_TO_ONE', False)
 FORCE_INACTIVE_END_SESSION = getattr(settings, 'FORCE_INACTIVE_END_SESSION', False)
 
 
+# Create your query_set here.
+class ObjectViewedQuerySet(models.query.QuerySet):
+    def by_model(self, model_class, model_queryset=False):
+        c_type = ContentType.objects.get_for_model(model_class)
+        qs = self.filter(content_type=c_type)
+        if model_queryset:
+            viewed_ids = [x.object_id for x in qs]
+            return model_class.filter(pk__in=viewed_ids)
+        return qs
+
+
+# Create your manager here.
+class ObjectViewedManager(models.Manager):
+    def get_queryset(self):
+        return ObjectViewedQuerySet(self.model, using=self._db)
+
+    def by_model(self, model_class, model_queryset=False):
+        return self.get_queryset().by_model(model_class, model_queryset=model_queryset)
+
+
 # Create your models here.
 class ObjectViewed(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
@@ -23,6 +43,8 @@ class ObjectViewed(models.Model):
     object_id = models.PositiveIntegerField()  # user_id, product_id, cart_id
     content_object = GenericForeignKey('content_type', 'object_id')  # Product Instance
     timestamp = models.DateTimeField(auto_now_add=True)
+
+    objects = ObjectViewedManager()
 
     def __str__(self):
         return "%s viewed on %s" % (self.content_type, self.timestamp)
