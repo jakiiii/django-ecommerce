@@ -3,10 +3,8 @@
     <input type="hidden" name="product" value="{{ product.id }}" />
     <span class="submit-span">
         {% if product in cart.products.all %}
-            <h4>
-                <span class="text-success">This product in your Cart.</span>
-                <button type="submit" class="btn btn-outline-danger">Remove</button>
-            </h4>
+<!--            <span class="text-success">This product in your Cart.</span> -->
+            <button type="submit" class="btn btn-outline-danger">Remove</button>
         {% else %}
             <button type="submit" class="btn btn-outline-success">Add to Cart</button>
         {% endif %}
