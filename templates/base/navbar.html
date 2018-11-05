@@ -38,9 +38,8 @@
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
 
                         <a class="dropdown-item" href="{{ account_url }}">Home</a>
-                        <a class="dropdown-item" href="">Billing</a>
-                        <a class="dropdown-item" href="">Settings</a>
-                        <a class="dropdown-item" href="">History</a>
+                        <a class="dropdown-item" href="{% url 'payment-method' %}">Billing</a>
+                        <a class="dropdown-item" href="{% url 'update-user-name' %}">Settings</a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="{{ logout_url }}">Logout</a>
                     </div>

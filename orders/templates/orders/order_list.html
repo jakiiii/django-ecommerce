@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block title %}Order Archive || {{ block.super }}{% endblock title %}
+
+{% block content %}
+    <div>
+        <h1><b>Order's History</b></h1><hr/>
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Order ID</th>
+                <th scope="col">Status</th>
+                <th scope="col">Total</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for order in order_list %}
+            <tr>
+                <th scope="row">{{ forloop.counter }}</th>
+                <td><a href="{{ order.get_absolute_url }}">{{ order.order_id }}</a></td>
+                <td>{{ order.get_status }}</td>
+                <td>{{ order.total }} Tk</td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

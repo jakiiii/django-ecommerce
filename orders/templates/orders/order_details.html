@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% block title %}Order || {{ block.super }}{% endblock title %}
+
+{% block content %}
+    <div>
+        <h1><b>Order ID: {{ object.order_id }}</b></h1><hr/>
+        <div class="col-6 mx-auto">
+            <table class="table table-bordered">
+                <tbody>
+                <tr>
+                    <th width="250px"><b>Profile: </b></th>
+                    <td>{{ object.billing_profile }}</td>
+                </tr>
+                <tr>
+                    <th width="250px"><b>Shipping Address: </b></th>
+                    <td>{{ object.shipping_address.get_address }}</td>
+                </tr>
+                <tr>
+                    <th width="250px"><b>Billing Address: </b></th>
+                    <td>{{ object.billing_address.get_address }}</td>
+                </tr>
+                <tr>
+                    <th width="250px"><b>Status: </b></th>
+                    <td>{{ object.get_status }}</td>
+                </tr>
+
+                <tr>
+                    <th width="250px"><b>Cart Total: </b></th>
+                    <td>{{ object.cart.total }}</td>
+                </tr>
+                <tr>
+                    <th width="250px"><b>Cart Shipping Total: </b></th>
+                    <td>{{ object.shipping_total }}</td>
+                </tr>
+                <tr>
+                    <th width="250px"><b>Order Total: </b></th>
+                    <td>{{ object.total }}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}
